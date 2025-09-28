@@ -70,8 +70,9 @@ class PS5Product:
 class EnhancedBaseScraper:
     """Classe base aprimorada para todos os scrapers"""
     
-    def __init__(self, site_name: str):
+    def __init__(self, site_name: str, debug_mode: bool = False):
         self.site_name = site_name
+        self.debug_mode = debug_mode
         self.session = requests.Session()
         self.ua = UserAgent()
         self.session.headers.update({
@@ -90,13 +91,19 @@ class EnhancedBaseScraper:
             return self.driver
             
         chrome_options = Options()
-        chrome_options.add_argument('--headless')
+        if not self.debug_mode:
+            chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option('useAutomationExtension', False)
+        chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
         
         try:
             # Usa o ChromeDriver com configurações simples
             self.driver = webdriver.Chrome(options=chrome_options)
+            self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
             return self.driver
         except Exception as e:
             logger.error(f"Erro ao criar driver do Chrome: {e}")
@@ -257,61 +264,372 @@ class EnhancedBaseScraper:
             return driver.find_elements(by, value)
         except TimeoutException:
             return []
+    
+    def debug_page_info(self, driver, site_name):
+        """Captura informações de debug da página"""
+        if not self.debug_mode:
+            return
+            
+        try:
+            # Captura screenshot
+            screenshot_path = f"debug_{site_name.lower().replace(' ', '_')}_screenshot.png"
+            driver.save_screenshot(screenshot_path)
+            logger.info(f"📸 Screenshot salvo: {screenshot_path}")
+            
+            # Captura HTML da página
+            html_path = f"debug_{site_name.lower().replace(' ', '_')}_page.html"
+            with open(html_path, 'w', encoding='utf-8') as f:
+                f.write(driver.page_source)
+            logger.info(f"📄 HTML salvo: {html_path}")
+            
+            # Log do título da página
+            page_title = driver.title
+            logger.info(f"📋 Título da página: {page_title}")
+            
+            # Log da URL atual
+            current_url = driver.current_url
+            logger.info(f"🌐 URL atual: {current_url}")
+            
+        except Exception as e:
+            logger.warning(f"⚠️ Erro ao capturar debug: {e}")
+    
+    def log_page_elements(self, driver, selectors_to_check):
+        """Loga informações sobre elementos encontrados na página"""
+        logger.info(f"🔍 Verificando elementos na página...")
+        
+        for name, selector in selectors_to_check.items():
+            try:
+                elements = driver.find_elements(By.CSS_SELECTOR, selector)
+                logger.info(f"  {name}: {len(elements)} elementos encontrados")
+                
+                if elements and self.debug_mode:
+                    # Log do primeiro elemento encontrado
+                    first_element = elements[0]
+                    try:
+                        element_text = first_element.text[:100] + "..." if len(first_element.text) > 100 else first_element.text
+                        logger.info(f"    Primeiro elemento: {element_text}")
+                    except:
+                        logger.info(f"    Primeiro elemento: [texto não acessível]")
+                        
+            except Exception as e:
+                logger.warning(f"  {name}: Erro ao verificar - {e}")
+    
+    def wait_for_page_load(self, driver, timeout=10):
+        """Aguarda a página carregar completamente"""
+        try:
+            # Aguarda o JavaScript carregar
+            WebDriverWait(driver, timeout).until(
+                lambda driver: driver.execute_script("return document.readyState") == "complete"
+            )
+            logger.info("✅ Página carregada completamente")
+            return True
+        except TimeoutException:
+            logger.warning("⚠️ Timeout aguardando página carregar")
+            return False
+    
+    def extract_json_ld_products(self, driver) -> List[PS5Product]:
+        """Extrai produtos de dados JSON-LD estruturados"""
+        products = []
+        
+        try:
+            # Procura por scripts com dados JSON-LD
+            json_scripts = driver.find_elements(By.CSS_SELECTOR, 'script[type="application/ld+json"]')
+            logger.info(f"🔍 Encontrados {len(json_scripts)} scripts JSON-LD")
+            
+            for script in json_scripts:
+                try:
+                    json_text = script.get_attribute('innerHTML')
+                    if not json_text:
+                        continue
+                    
+                    # Parse do JSON
+                    data = json.loads(json_text)
+                    
+                    # Verifica se é um grafo de produtos
+                    if isinstance(data, dict) and '@graph' in data:
+                        products_data = data['@graph']
+                    elif isinstance(data, list):
+                        products_data = data
+                    else:
+                        continue
+                    
+                    logger.info(f"📦 Processando {len(products_data)} produtos do JSON-LD")
+                    
+                    for product_data in products_data:
+                        if product_data.get('@type') == 'Product':
+                            product = PS5Product()
+                            product.site_origem = self.site_name
+                            product.data_coleta = datetime.now().isoformat()
+                            
+                            # Nome do produto
+                            product.nome_anuncio = product_data.get('name', '')
+                            
+                            # URL do produto
+                            offers = product_data.get('offers', {})
+                            if isinstance(offers, dict):
+                                product.link_pagina = offers.get('url', '')
+                                product.preco_vista = str(offers.get('price', ''))
+                            
+                            # Extrai informações do título
+                            title_text = product.nome_anuncio.lower()
+                            product.modelo = self.extract_model(title_text)
+                            product.cor = self.extract_color(title_text)
+                            product.com_leitor_disco = self.extract_disk_reader(title_text)
+                            product.espaco_armazenamento = self.extract_storage(title_text)
+                            product.jogos_incluidos = self.extract_games(title_text)
+                            product.inclui_controles = self.extract_controllers(title_text)
+                            
+                            if product.nome_anuncio:  # Só adiciona se tem nome
+                                products.append(product)
+                                logger.debug(f"✅ Produto JSON-LD: {product.nome_anuncio[:50]}...")
+                    
+                except json.JSONDecodeError as e:
+                    logger.debug(f"⚠️ Erro ao parsear JSON-LD: {e}")
+                    continue
+                except Exception as e:
+                    logger.debug(f"⚠️ Erro ao processar JSON-LD: {e}")
+                    continue
+            
+            logger.info(f"📊 Total de produtos extraídos do JSON-LD: {len(products)}")
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao extrair JSON-LD: {e}")
+        
+        return products
+    
+    def extract_product_urls_from_json_ld(self, driver) -> List[str]:
+        """Extrai URLs dos produtos de dados JSON-LD estruturados"""
+        urls = []
+        
+        try:
+            # Procura por scripts com dados JSON-LD
+            json_scripts = driver.find_elements(By.CSS_SELECTOR, 'script[type="application/ld+json"]')
+            logger.info(f"🔍 Encontrados {len(json_scripts)} scripts JSON-LD")
+            
+            for script in json_scripts:
+                try:
+                    json_text = script.get_attribute('innerHTML')
+                    if not json_text:
+                        continue
+                    
+                    # Parse do JSON
+                    data = json.loads(json_text)
+                    
+                    # Verifica se é um grafo de produtos
+                    if isinstance(data, dict) and '@graph' in data:
+                        products_data = data['@graph']
+                    elif isinstance(data, list):
+                        products_data = data
+                    else:
+                        continue
+                    
+                    logger.info(f"📦 Processando {len(products_data)} produtos do JSON-LD")
+                    
+                    for product_data in products_data:
+                        if product_data.get('@type') == 'Product':
+                            offers = product_data.get('offers', {})
+                            if isinstance(offers, dict) and 'url' in offers:
+                                url = offers['url']
+                                if url and 'mercadolivre.com.br' in url:
+                                    urls.append(url)
+                                    logger.debug(f"🔗 URL encontrada: {url}")
+                    
+                except json.JSONDecodeError as e:
+                    logger.debug(f"⚠️ Erro ao parsear JSON-LD: {e}")
+                    continue
+                except Exception as e:
+                    logger.debug(f"⚠️ Erro ao processar JSON-LD: {e}")
+                    continue
+            
+            logger.info(f"📊 Total de URLs extraídas: {len(urls)}")
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao extrair URLs do JSON-LD: {e}")
+        
+        return urls
+    
+    def scrape_product_page(self, driver, product_url: str) -> PS5Product:
+        """Extrai dados de uma página individual de produto"""
+        product = PS5Product()
+        product.site_origem = self.site_name
+        product.data_coleta = datetime.now().isoformat()
+        product.link_pagina = product_url
+        
+        try:
+            logger.debug(f"🔍 Acessando página do produto: {product_url}")
+            driver.get(product_url)
+            self.wait_for_page_load(driver)
+            time.sleep(3)  # Aguarda carregar completamente
+            
+            # Título do produto - seletores atualizados
+            title_selectors = [
+                "h1.ui-pdp-title",
+                ".ui-pdp-title",
+                "h1[data-testid='product-title']",
+                "h1",
+                "[data-testid='product-title']",
+                ".product-title",
+                ".ui-pdp-title__label"
+            ]
+            
+            for selector in title_selectors:
+                try:
+                    title_elem = driver.find_element(By.CSS_SELECTOR, selector)
+                    product.nome_anuncio = title_elem.text.strip()
+                    if product.nome_anuncio:
+                        break
+                except NoSuchElementException:
+                    continue
+            
+            # Preço à vista - seletores atualizados
+            price_selectors = [
+                ".andes-money-amount__fraction",
+                ".price-tag-fraction",
+                ".ui-pdp-price__fraction",
+                "[data-testid='price-current']",
+                ".price-current",
+                ".andes-money-amount__fraction--cents",
+                ".ui-pdp-price__part--medium",
+                ".andes-money-amount__fraction--cents"
+            ]
+            
+            for selector in price_selectors:
+                try:
+                    price_elem = driver.find_element(By.CSS_SELECTOR, selector)
+                    price_text = price_elem.text.strip()
+                    if price_text:
+                        product.preco_vista = self.clean_price(price_text)
+                        break
+                except NoSuchElementException:
+                    continue
+            
+            # Preço parcelado - seletores atualizados
+            installment_selectors = [
+                ".ui-pdp-price__second-line",
+                ".price-tag-cents",
+                ".installments",
+                "[data-testid='price-installments']",
+                ".andes-money-amount__cents",
+                ".ui-pdp-price__part--small"
+            ]
+            
+            for selector in installment_selectors:
+                try:
+                    installment_elem = driver.find_element(By.CSS_SELECTOR, selector)
+                    installment_text = installment_elem.text.strip()
+                    if installment_text and ("x" in installment_text.lower() or "vezes" in installment_text.lower()):
+                        product.preco_parcelado = self.clean_price(installment_text)
+                        break
+                except NoSuchElementException:
+                    continue
+            
+            # Descrição do produto para extrair mais informações
+            description_selectors = [
+                ".ui-pdp-description__content",
+                ".ui-pdp-description",
+                "[data-testid='product-description']",
+                ".product-description"
+            ]
+            
+            description_text = ""
+            for selector in description_selectors:
+                try:
+                    desc_elem = driver.find_element(By.CSS_SELECTOR, selector)
+                    description_text = desc_elem.text.strip()
+                    if description_text:
+                        break
+                except NoSuchElementException:
+                    continue
+            
+            # Combina título e descrição para extrair informações
+            full_text = f"{product.nome_anuncio} {description_text}".lower()
+            
+            # Extrai informações do texto combinado
+            product.modelo = self.extract_model(full_text)
+            product.cor = self.extract_color(full_text)
+            product.com_leitor_disco = self.extract_disk_reader(full_text)
+            product.espaco_armazenamento = self.extract_storage(full_text)
+            product.jogos_incluidos = self.extract_games(full_text)
+            product.inclui_controles = self.extract_controllers(full_text)
+            
+            # Determina o tipo de console baseado na URL ou título
+            if "switch" in full_text or "nintendo" in full_text:
+                product.tipo = "Console Nintendo Switch"
+                product.marca = "Nintendo"
+            elif "xbox" in full_text:
+                product.tipo = "Console Xbox"
+                product.marca = "Microsoft"
+            elif "playstation" in full_text or "ps5" in full_text:
+                product.tipo = "Console PlayStation"
+                product.marca = "Sony"
+            
+            # Verifica disponibilidade
+            availability_selectors = [
+                ".ui-pdp-stock-information__title",
+                "[data-testid='availability']",
+                ".availability"
+            ]
+            
+            for selector in availability_selectors:
+                try:
+                    avail_elem = driver.find_element(By.CSS_SELECTOR, selector)
+                    product.disponibilidade = avail_elem.text.strip()
+                    break
+                except NoSuchElementException:
+                    continue
+            
+            logger.debug(f"✅ Produto extraído: {product.nome_anuncio[:50]}... - R$ {product.preco_vista}")
+            
+        except Exception as e:
+            logger.debug(f"⚠️ Erro ao extrair dados da página {product_url}: {e}")
+        
+        return product
 
 
 class MercadoLivreScraper(EnhancedBaseScraper):
-    """Scraper aprimorado para MercadoLivre"""
+    """Scraper otimizado para MercadoLivre com paginação robusta"""
     
-    def __init__(self):
-        super().__init__("MercadoLivre")
-        self.base_url = "https://lista.mercadolivre.com.br/ps5"
+    def __init__(self, debug_mode=False):
+        super().__init__("MercadoLivre", debug_mode)
+        # URLs específicas para scraping
+        self.target_urls = [
+            "https://lista.mercadolivre.com.br/switch-2",
+            "https://lista.mercadolivre.com.br/xbox-series-x", 
+            "https://lista.mercadolivre.com.br/playstation-5",
+            "https://lista.mercadolivre.com.br/xbox-series-s"
+        ]
     
     def scrape(self) -> List[PS5Product]:
-        """Executa o scraping do MercadoLivre"""
-        products = []
+        """Executa o scraping do MercadoLivre para todas as URLs especificadas"""
+        all_products = []
         
         try:
             logger.info(f"🔧 Criando driver do Chrome para {self.site_name}...")
             driver = self.get_driver()
             logger.info(f"✅ Driver criado com sucesso para {self.site_name}")
             
-            logger.info(f"🌐 Navegando para {self.base_url}...")
-            driver.get(self.base_url)
-            logger.info(f"⏳ Aguardando página carregar (3s)...")
-            time.sleep(3)
-            
-            # Aguarda carregar a página
-            logger.info(f"🔍 Procurando por resultados na página...")
-            if not self.safe_find_element(driver, By.CSS_SELECTOR, ".ui-search-results"):
-                logger.warning(f"❌ Não foi possível carregar resultados do {self.site_name}")
-                return products
-            
-            logger.info(f"✅ Página carregada com sucesso! Iniciando coleta da página 1...")
-            # Coleta produtos da primeira página
-            page_products = self._scrape_page(driver)
-            products.extend(page_products)
-            logger.info(f"📦 Página 1: {len(page_products)} produtos coletados (Total: {len(products)})")
-            
-            # Tenta navegar para próximas páginas
-            for page in range(2, 8):  # Aumenta para 8 páginas
+            # Processa cada URL especificada
+            for url_index, base_url in enumerate(self.target_urls, 1):
+                logger.info(f"\n{'='*60}")
+                logger.info(f"🌐 PROCESSANDO URL {url_index}/{len(self.target_urls)}: {base_url}")
+                logger.info(f"{'='*60}")
+                
                 try:
-                    logger.info(f"🔄 Tentando navegar para página {page}...")
-                    if self.wait_and_click(driver, By.CSS_SELECTOR, ".andes-pagination__button--next"):
-                        wait_time = random.uniform(3, 6)
-                        logger.info(f"⏳ Aguardando {wait_time:.1f}s antes de coletar página {page}...")
-                        time.sleep(wait_time)
+                    products = self.scrape_url_with_pagination(driver, base_url)
+                    all_products.extend(products)
+                    logger.info(f"✅ URL {url_index} concluída: {len(products)} produtos coletados")
+                    
+                    # Pausa entre URLs para evitar bloqueios
+                    if url_index < len(self.target_urls):
+                        pause_time = random.uniform(3, 6)
+                        logger.info(f"⏳ Pausando {pause_time:.1f}s antes da próxima URL...")
+                        time.sleep(pause_time)
                         
-                        page_products = self._scrape_page(driver)
-                        products.extend(page_products)
-                        logger.info(f"📦 Página {page}: {len(page_products)} produtos coletados (Total: {len(products)})")
-                    else:
-                        logger.info(f"🚫 Botão 'próxima página' não encontrado ou desabilitado. Parando coleta.")
-                        break
                 except Exception as e:
-                    logger.warning(f"⚠️ Erro ao navegar para página {page} do {self.site_name}: {e}")
-                    break
+                    logger.error(f"❌ Erro ao processar URL {url_index}: {e}")
+                    continue
             
-            logger.info(f"🎉 Coleta do {self.site_name} concluída! Total: {len(products)} produtos")
+            logger.info(f"🎉 Coleta do {self.site_name} concluída! Total: {len(all_products)} produtos")
             
         except Exception as e:
             logger.error(f"❌ Erro no {self.site_name}: {e}")
@@ -319,63 +637,237 @@ class MercadoLivreScraper(EnhancedBaseScraper):
             logger.info(f"🔒 Fechando driver do {self.site_name}...")
             self.close_driver()
         
+        return all_products
+    
+    def scrape_url_with_pagination(self, driver, base_url: str) -> List[PS5Product]:
+        """Scrapa uma URL específica com paginação completa"""
+        products = []
+        current_page = 1
+        max_pages = 50  # Limite de segurança para evitar loops infinitos
+        
+        try:
+            logger.info(f"🌐 Navegando para: {base_url}")
+            driver.get(base_url)
+            
+            # Aguarda página carregar completamente
+            logger.info(f"⏳ Aguardando página carregar...")
+            self.wait_for_page_load(driver)
+            time.sleep(3)
+            
+            # Debug: captura informações da página
+            self.debug_page_info(driver, f"{self.site_name}_page_{current_page}")
+            
+            while current_page <= max_pages:
+                logger.info(f"📄 Processando página {current_page}...")
+                
+                # Coleta produtos da página atual
+                page_products = self._scrape_page(driver)
+                products.extend(page_products)
+                logger.info(f"📦 Página {current_page}: {len(page_products)} produtos coletados (Total: {len(products)})")
+                
+                # Verifica se há próxima página
+                next_page_found = self._go_to_next_page(driver)
+                
+                if not next_page_found:
+                    logger.info(f"✅ Última página alcançada na página {current_page}")
+                    break
+                
+                current_page += 1
+                
+                # Pausa entre páginas para evitar bloqueios
+                pause_time = random.uniform(2, 4)
+                logger.debug(f"⏳ Pausando {pause_time:.1f}s antes da próxima página...")
+                time.sleep(pause_time)
+            
+            logger.info(f"🎉 Coleta de {base_url} concluída: {len(products)} produtos em {current_page} páginas")
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao processar URL {base_url}: {e}")
+        
         return products
     
+    def _go_to_next_page(self, driver) -> bool:
+        """Navega para a próxima página se disponível"""
+        try:
+            # Aguarda um pouco para garantir que a página carregou completamente
+            time.sleep(2)
+            
+            # Seletores para botão de próxima página - atualizados
+            next_page_selectors = [
+                "a[title='Seguinte']",
+                ".andes-pagination__button--next",
+                "a[aria-label='Seguinte']",
+                ".ui-search-pagination__next",
+                "a[data-testid='pagination-next']",
+                "button[aria-label='Seguinte']",
+                ".andes-pagination__arrow--next",
+                "a[title='Próxima']",
+                "a[aria-label='Próxima']",
+                "button[aria-label='Próxima']"
+            ]
+            
+            # Primeiro tenta encontrar o botão com seletores CSS
+            for selector in next_page_selectors:
+                try:
+                    next_button = driver.find_element(By.CSS_SELECTOR, selector)
+                    
+                    # Verifica se o botão está habilitado e visível
+                    if next_button.is_enabled() and next_button.is_displayed():
+                        # Verifica se não está desabilitado
+                        if "disabled" not in next_button.get_attribute("class").lower():
+                            logger.info(f"🔍 Botão 'Seguinte' encontrado com seletor: {selector}")
+                            
+                            # Tenta clicar no botão
+                            driver.execute_script("arguments[0].click();", next_button)
+                            
+                            # Aguarda a nova página carregar
+                            self.wait_for_page_load(driver)
+                            time.sleep(3)
+                            
+                            logger.info(f"✅ Navegou para próxima página")
+                            return True
+                        
+                except NoSuchElementException:
+                    continue
+                except Exception as e:
+                    logger.debug(f"⚠️ Erro com seletor {selector}: {e}")
+                    continue
+            
+            # Se não encontrou com CSS, tenta com XPath
+            xpath_selectors = [
+                "//a[contains(text(), 'Seguinte')]",
+                "//button[contains(text(), 'Seguinte')]",
+                "//a[contains(text(), 'Próxima')]",
+                "//button[contains(text(), 'Próxima')]",
+                "//a[contains(@title, 'Seguinte')]",
+                "//a[contains(@aria-label, 'Seguinte')]"
+            ]
+            
+            for xpath_selector in xpath_selectors:
+                try:
+                    next_button = driver.find_element(By.XPATH, xpath_selector)
+                    
+                    if next_button.is_enabled() and next_button.is_displayed():
+                        if "disabled" not in next_button.get_attribute("class").lower():
+                            logger.info(f"🔍 Botão 'Seguinte' encontrado com XPath: {xpath_selector}")
+                            
+                            driver.execute_script("arguments[0].click();", next_button)
+                            self.wait_for_page_load(driver)
+                            time.sleep(3)
+                            
+                            logger.info(f"✅ Navegou para próxima página")
+                            return True
+                            
+                except NoSuchElementException:
+                    continue
+                except Exception as e:
+                    logger.debug(f"⚠️ Erro com XPath {xpath_selector}: {e}")
+                    continue
+            
+            logger.info(f"❌ Botão 'Seguinte' não encontrado - última página alcançada")
+            return False
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao navegar para próxima página: {e}")
+            return False
+    
     def _scrape_page(self, driver) -> List[PS5Product]:
-        """Scrapa uma página específica"""
+        """Scrapa uma página específica acessando cada produto individualmente"""
         products = []
         
         try:
             logger.info(f"🔍 Procurando por itens na página...")
-            items = self.safe_find_elements(driver, By.CSS_SELECTOR, ".ui-search-item")
-            logger.info(f"📋 Encontrados {len(items)} itens na página")
             
+            # Seletores atualizados para itens do Mercado Livre
+            item_selectors = [
+                ".ui-search-layout__item",
+                ".ui-search-item",
+                ".ui-search-results__item",
+                "[data-testid='product-item']",
+                ".ui-search-item__wrapper"
+            ]
+            
+            items = []
+            for selector in item_selectors:
+                items = self.safe_find_elements(driver, By.CSS_SELECTOR, selector)
+                if items:
+                    logger.info(f"📋 Encontrados {len(items)} itens usando seletor: {selector}")
+                    break
+            
+            if not items:
+                logger.warning(f"❌ Nenhum item encontrado na página")
+                # Tenta extrair via JSON-LD como fallback
+                logger.info(f"🔍 Tentando extração via JSON-LD...")
+                return self.extract_json_ld_products(driver)
+            
+            # Coleta URLs dos produtos primeiro
+            product_urls = []
             for i, item in enumerate(items, 1):
                 try:
-                    logger.debug(f"📝 Processando item {i}/{len(items)}...")
-                    product = PS5Product()
-                    product.site_origem = self.site_name
-                    product.data_coleta = datetime.now().isoformat()
+                    # Busca por link do produto
+                    link_selectors = [
+                        ".ui-search-link",
+                        ".ui-search-item__title a",
+                        "a[data-testid='product-link']",
+                        "a"
+                    ]
                     
-                    # Nome do anúncio
-                    title_elem = item.find_element(By.CSS_SELECTOR, ".ui-search-item__title")
-                    product.nome_anuncio = title_elem.text.strip()
-                    logger.debug(f"📄 Nome: {product.nome_anuncio[:50]}...")
+                    product_url = None
+                    for link_selector in link_selectors:
+                        try:
+                            link_elem = item.find_element(By.CSS_SELECTOR, link_selector)
+                            href = link_elem.get_attribute("href")
+                            if href and "mercadolivre.com.br" in href and "/p/" in href:
+                                product_url = href
+                                break
+                        except NoSuchElementException:
+                            continue
                     
-                    # Link
-                    link_elem = item.find_element(By.CSS_SELECTOR, ".ui-search-link")
-                    product.link_pagina = link_elem.get_attribute("href")
-                    
-                    # Preço à vista
-                    try:
-                        price_elem = item.find_element(By.CSS_SELECTOR, ".andes-money-amount__fraction")
-                        product.preco_vista = self.clean_price(price_elem.text)
-                        logger.debug(f"💰 Preço: R$ {product.preco_vista}")
-                    except NoSuchElementException:
-                        logger.debug(f"💰 Preço não encontrado")
-                        pass
-                    
-                    # Preço parcelado
-                    try:
-                        installments_elem = item.find_element(By.CSS_SELECTOR, ".ui-search-price__second-line")
-                        product.preco_parcelado = self.clean_price(installments_elem.text)
-                    except NoSuchElementException:
-                        pass
-                    
-                    # Extrai informações do título
-                    title_text = product.nome_anuncio.lower()
-                    product.modelo = self.extract_model(title_text)
-                    product.cor = self.extract_color(title_text)
-                    product.com_leitor_disco = self.extract_disk_reader(title_text)
-                    product.espaco_armazenamento = self.extract_storage(title_text)
-                    product.jogos_incluidos = self.extract_games(title_text)
-                    product.inclui_controles = self.extract_controllers(title_text)
-                    
-                    products.append(product)
-                    logger.debug(f"✅ Item {i} processado com sucesso")
+                    if product_url:
+                        product_urls.append(product_url)
+                        logger.debug(f"🔗 URL {i}: {product_url[:80]}...")
                     
                 except Exception as e:
-                    logger.debug(f"⚠️ Erro ao processar item {i} do {self.site_name}: {e}")
+                    logger.debug(f"⚠️ Erro ao extrair URL do item {i}: {e}")
+                    continue
+            
+            logger.info(f"📦 Encontradas {len(product_urls)} URLs de produtos para processar")
+            
+            # Agora acessa cada página individual para coletar dados completos
+            for i, product_url in enumerate(product_urls, 1):
+                try:
+                    logger.info(f"🔍 Processando produto {i}/{len(product_urls)}: {product_url[:80]}...")
+                    
+                    # Acessa a página do produto
+                    product = self.scrape_product_page(driver, product_url)
+                    
+                    if product and product.nome_anuncio:
+                        products.append(product)
+                        logger.info(f"✅ Produto {i} coletado: {product.nome_anuncio[:50]}... - R$ {product.preco_vista}")
+                    else:
+                        logger.warning(f"⚠️ Produto {i} não pôde ser coletado")
+                    
+                    # Volta para a página de listagem se não for o último produto
+                    if i < len(product_urls):
+                        logger.debug(f"🔄 Voltando para página de listagem...")
+                        driver.back()
+                        self.wait_for_page_load(driver)
+                        time.sleep(2)
+                        
+                        # Pausa entre produtos para evitar bloqueios
+                        pause_time = random.uniform(1, 3)
+                        logger.debug(f"⏳ Pausando {pause_time:.1f}s antes do próximo produto...")
+                        time.sleep(pause_time)
+                    
+                except Exception as e:
+                    logger.error(f"❌ Erro ao processar produto {i}: {e}")
+                    # Tenta voltar para a listagem em caso de erro
+                    try:
+                        driver.back()
+                        self.wait_for_page_load(driver)
+                        time.sleep(2)
+                    except:
+                        pass
                     continue
             
             logger.info(f"✅ Página processada: {len(products)} produtos coletados")
@@ -389,8 +881,8 @@ class MercadoLivreScraper(EnhancedBaseScraper):
 class KabumScraper(EnhancedBaseScraper):
     """Scraper aprimorado para Kabum"""
     
-    def __init__(self):
-        super().__init__("Kabum")
+    def __init__(self, debug_mode=False):
+        super().__init__("Kabum", debug_mode)
         self.base_url = "https://www.kabum.com.br/gamer/playstation/consoles-playstation/playstation-5"
     
     def scrape(self) -> List[PS5Product]:
@@ -402,10 +894,31 @@ class KabumScraper(EnhancedBaseScraper):
             logger.info(f"Iniciando coleta do {self.site_name}")
             
             driver.get(self.base_url)
+            self.wait_for_page_load(driver)
             time.sleep(3)
             
-            # Aguarda carregar a página
-            if not self.safe_find_element(driver, By.CSS_SELECTOR, ".productCard"):
+            # Debug: captura informações da página
+            self.debug_page_info(driver, self.site_name)
+            
+            # Verifica diferentes seletores possíveis para resultados
+            selectors_to_check = {
+                "Cards de produtos": ".productCard",
+                "Lista de produtos": ".productList",
+                "Grid de produtos": ".productGrid",
+                "Container de produtos": ".productContainer"
+            }
+            
+            self.log_page_elements(driver, selectors_to_check)
+            
+            # Tenta diferentes seletores para encontrar resultados
+            results_found = False
+            for name, selector in selectors_to_check.items():
+                if self.safe_find_element(driver, By.CSS_SELECTOR, selector):
+                    logger.info(f"✅ Encontrados resultados usando seletor: {name}")
+                    results_found = True
+                    break
+            
+            if not results_found:
                 logger.warning(f"Não foi possível carregar resultados do {self.site_name}")
                 return products
             
@@ -486,8 +999,8 @@ class KabumScraper(EnhancedBaseScraper):
 class MagazineLuizaScraper(EnhancedBaseScraper):
     """Scraper aprimorado para Magazine Luiza"""
     
-    def __init__(self):
-        super().__init__("Magazine Luiza")
+    def __init__(self, debug_mode=False):
+        super().__init__("Magazine Luiza", debug_mode)
         self.base_url = "https://www.magazineluiza.com.br/busca/ps5/"
     
     def scrape(self) -> List[PS5Product]:
@@ -499,10 +1012,32 @@ class MagazineLuizaScraper(EnhancedBaseScraper):
             logger.info(f"Iniciando coleta do {self.site_name}")
             
             driver.get(self.base_url)
+            self.wait_for_page_load(driver)
             time.sleep(3)
             
-            # Aguarda carregar a página
-            if not self.safe_find_element(driver, By.CSS_SELECTOR, "[data-testid='product-card']"):
+            # Debug: captura informações da página
+            self.debug_page_info(driver, self.site_name)
+            
+            # Verifica diferentes seletores possíveis para resultados
+            selectors_to_check = {
+                "Cards de produtos": "[data-testid='product-card']",
+                "Lista de produtos": ".product-list",
+                "Grid de produtos": ".product-grid",
+                "Container de produtos": ".product-container",
+                "Itens de busca": ".search-item"
+            }
+            
+            self.log_page_elements(driver, selectors_to_check)
+            
+            # Tenta diferentes seletores para encontrar resultados
+            results_found = False
+            for name, selector in selectors_to_check.items():
+                if self.safe_find_element(driver, By.CSS_SELECTOR, selector):
+                    logger.info(f"✅ Encontrados resultados usando seletor: {name}")
+                    results_found = True
+                    break
+            
+            if not results_found:
                 logger.warning(f"Não foi possível carregar resultados do {self.site_name}")
                 return products
             
@@ -580,108 +1115,11 @@ class MagazineLuizaScraper(EnhancedBaseScraper):
         return products
 
 
-class AmazonScraper(EnhancedBaseScraper):
-    """Scraper aprimorado para Amazon"""
-    
-    def __init__(self):
-        super().__init__("Amazon")
-        self.base_url = "https://www.amazon.com.br/s?k=ps5"
-    
-    def scrape(self) -> List[PS5Product]:
-        """Executa o scraping da Amazon"""
-        products = []
-        
-        try:
-            driver = self.get_driver()
-            logger.info(f"Iniciando coleta do {self.site_name}")
-            
-            driver.get(self.base_url)
-            time.sleep(3)
-            
-            # Aguarda carregar a página
-            if not self.safe_find_element(driver, By.CSS_SELECTOR, "[data-component-type='s-search-result']"):
-                logger.warning(f"Não foi possível carregar resultados do {self.site_name}")
-                return products
-            
-            # Coleta produtos da primeira página
-            products.extend(self._scrape_page(driver))
-            
-            # Tenta navegar para próximas páginas
-            for page in range(2, 8):
-                try:
-                    if self.wait_and_click(driver, By.CSS_SELECTOR, ".s-pagination-next"):
-                        time.sleep(random.uniform(3, 6))
-                        products.extend(self._scrape_page(driver))
-                        logger.info(f"Página {page} do {self.site_name} coletada")
-                    else:
-                        break
-                except Exception as e:
-                    logger.warning(f"Erro ao navegar para página {page} do {self.site_name}: {e}")
-                    break
-            
-            logger.info(f"Coletados {len(products)} produtos do {self.site_name}")
-            
-        except Exception as e:
-            logger.error(f"Erro no {self.site_name}: {e}")
-        finally:
-            self.close_driver()
-        
-        return products
-    
-    def _scrape_page(self, driver) -> List[PS5Product]:
-        """Scrapa uma página específica"""
-        products = []
-        
-        try:
-            items = self.safe_find_elements(driver, By.CSS_SELECTOR, "[data-component-type='s-search-result']")
-            
-            for item in items:
-                try:
-                    product = PS5Product()
-                    product.site_origem = self.site_name
-                    product.data_coleta = datetime.now().isoformat()
-                    
-                    # Nome do produto
-                    title_elem = item.find_element(By.CSS_SELECTOR, "h2 a span")
-                    product.nome_anuncio = title_elem.text.strip()
-                    
-                    # Link
-                    link_elem = item.find_element(By.CSS_SELECTOR, "h2 a")
-                    product.link_pagina = link_elem.get_attribute("href")
-                    
-                    # Preço
-                    try:
-                        price_elem = item.find_element(By.CSS_SELECTOR, ".a-price-whole")
-                        product.preco_vista = self.clean_price(price_elem.text)
-                    except NoSuchElementException:
-                        pass
-                    
-                    # Extrai informações do título
-                    title_text = product.nome_anuncio.lower()
-                    product.modelo = self.extract_model(title_text)
-                    product.cor = self.extract_color(title_text)
-                    product.com_leitor_disco = self.extract_disk_reader(title_text)
-                    product.espaco_armazenamento = self.extract_storage(title_text)
-                    product.jogos_incluidos = self.extract_games(title_text)
-                    product.inclui_controles = self.extract_controllers(title_text)
-                    
-                    products.append(product)
-                    
-                except Exception as e:
-                    logger.debug(f"Erro ao processar item do {self.site_name}: {e}")
-                    continue
-        
-        except Exception as e:
-            logger.error(f"Erro ao scrapar página do {self.site_name}: {e}")
-        
-        return products
-
-
 class CasasBahiaScraper(EnhancedBaseScraper):
     """Scraper aprimorado para Casas Bahia"""
     
-    def __init__(self):
-        super().__init__("Casas Bahia")
+    def __init__(self, debug_mode=False):
+        super().__init__("Casas Bahia", debug_mode)
         self.base_url = "https://www.casasbahia.com.br/ps5/b"
     
     def scrape(self) -> List[PS5Product]:
@@ -693,10 +1131,33 @@ class CasasBahiaScraper(EnhancedBaseScraper):
             logger.info(f"Iniciando coleta do {self.site_name}")
             
             driver.get(self.base_url)
+            self.wait_for_page_load(driver)
             time.sleep(3)
             
-            # Aguarda carregar a página
-            if not self.safe_find_element(driver, By.CSS_SELECTOR, ".product-item"):
+            # Debug: captura informações da página
+            self.debug_page_info(driver, self.site_name)
+            
+            # Verifica diferentes seletores possíveis para resultados
+            selectors_to_check = {
+                "Títulos de produtos": "h3",
+                "Cards de produtos": ".product-card",
+                "Lista de produtos": ".product-list",
+                "Grid de produtos": ".product-grid",
+                "Itens de busca": ".search-item",
+                "Produtos": ".product"
+            }
+            
+            self.log_page_elements(driver, selectors_to_check)
+            
+            # Tenta diferentes seletores para encontrar resultados
+            results_found = False
+            for name, selector in selectors_to_check.items():
+                if self.safe_find_element(driver, By.CSS_SELECTOR, selector):
+                    logger.info(f"✅ Encontrados resultados usando seletor: {name}")
+                    results_found = True
+                    break
+            
+            if not results_found:
                 logger.warning(f"Não foi possível carregar resultados do {self.site_name}")
                 return products
             
@@ -706,7 +1167,7 @@ class CasasBahiaScraper(EnhancedBaseScraper):
             # Tenta navegar para próximas páginas
             for page in range(2, 8):
                 try:
-                    if self.wait_and_click(driver, By.CSS_SELECTOR, ".pagination-next"):
+                    if self.wait_and_click(driver, By.CSS_SELECTOR, "button[aria-label='Próxima página']"):
                         time.sleep(random.uniform(3, 6))
                         products.extend(self._scrape_page(driver))
                         logger.info(f"Página {page} do {self.site_name} coletada")
@@ -730,26 +1191,49 @@ class CasasBahiaScraper(EnhancedBaseScraper):
         products = []
         
         try:
-            items = self.safe_find_elements(driver, By.CSS_SELECTOR, ".product-item")
+            # Busca por todos os headings h3 que contêm produtos
+            items = self.safe_find_elements(driver, By.CSS_SELECTOR, "h3")
             
             for item in items:
                 try:
+                    # Verifica se é um produto (contém link)
+                    link_elem = item.find_element(By.CSS_SELECTOR, "a")
+                    if not link_elem:
+                        continue
+                        
                     product = PS5Product()
                     product.site_origem = self.site_name
                     product.data_coleta = datetime.now().isoformat()
                     
-                    # Nome do produto
-                    title_elem = item.find_element(By.CSS_SELECTOR, ".product-title")
-                    product.nome_anuncio = title_elem.text.strip()
+                    # Nome do produto (texto do heading)
+                    product.nome_anuncio = item.text.strip()
                     
                     # Link
-                    link_elem = item.find_element(By.CSS_SELECTOR, "a")
                     product.link_pagina = link_elem.get_attribute("href")
                     
-                    # Preço
+                    # Preço - busca no elemento pai (próximos elementos)
                     try:
-                        price_elem = item.find_element(By.CSS_SELECTOR, ".price")
-                        product.preco_vista = self.clean_price(price_elem.text)
+                        # Busca o preço nos elementos seguintes
+                        parent = item.find_element(By.XPATH, "./..")
+                        price_text = ""
+                        
+                        # Tenta encontrar preço em diferentes elementos
+                        price_selectors = [
+                            "text[contains(., 'R$')]",
+                            "paragraph[contains(., 'R$')]",
+                            "text[contains(., 'por R$')]"
+                        ]
+                        
+                        for selector in price_selectors:
+                            try:
+                                price_elem = parent.find_element(By.XPATH, f".//{selector}")
+                                price_text = price_elem.text
+                                break
+                            except NoSuchElementException:
+                                continue
+                        
+                        if price_text:
+                            product.preco_vista = self.clean_price(price_text)
                     except NoSuchElementException:
                         pass
                     
@@ -837,49 +1321,33 @@ def save_to_excel(products: List[PS5Product], filename: str = "ps5_products.xlsx
         logger.error(f"Erro ao salvar Excel: {e}")
 
 
-def main():
-    """Função principal que executa todos os scrapers"""
-    logger.info("🎮 === INICIANDO COLETA DE DADOS DE PS5 ===")
+def main(debug_mode=False):
+    """Função principal que executa o scraper do Mercado Livre"""
+    logger.info("🎮 === INICIANDO COLETA DE DADOS DO MERCADO LIVRE ===")
     logger.info(f"📅 Data/Hora: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
     
-    # Lista de scrapers
-    scrapers = [
-        ("MercadoLivre", MercadoLivreScraper()),
-        ("Kabum", KabumScraper()),
-        ("Magazine Luiza", MagazineLuizaScraper()),
-        ("Amazon", AmazonScraper()),
-        ("Casas Bahia", CasasBahiaScraper()),
-    ]
+    if debug_mode:
+        logger.info("🐛 MODO DEBUG ATIVADO - Screenshots e HTML serão salvos")
     
-    all_products = []
-    total_sites = len(scrapers)
+    # Apenas o scraper do Mercado Livre
+    scraper = MercadoLivreScraper(debug_mode)
     
-    logger.info(f"🌐 Total de sites para coletar: {total_sites}")
-    logger.info(f"📋 Sites: {', '.join([name for name, _ in scrapers])}")
+    logger.info(f"🌐 URLs para coletar: {len(scraper.target_urls)}")
+    logger.info(f"📋 URLs:")
+    for i, url in enumerate(scraper.target_urls, 1):
+        logger.info(f"  {i}. {url}")
     
-    for site_num, (name, scraper) in enumerate(scrapers, 1):
-        logger.info(f"\n{'='*60}")
-        logger.info(f"🌐 SITE {site_num}/{total_sites}: {name}")
-        logger.info(f"{'='*60}")
+    try:
+        start_time = time.time()
+        all_products = scraper.scrape()
+        end_time = time.time()
+        duration = end_time - start_time
         
-        try:
-            start_time = time.time()
-            products = scraper.scrape()
-            end_time = time.time()
-            duration = end_time - start_time
-            
-            logger.info(f"✅ {name} concluído em {duration:.1f}s - {len(products)} produtos coletados")
-            all_products.extend(products)
-            
-            # Pausa entre scrapers para evitar bloqueios
-            if site_num < total_sites:  # Não pausa após o último site
-                pause_time = random.uniform(5, 10)
-                logger.info(f"⏳ Pausando {pause_time:.1f}s antes do próximo site...")
-                time.sleep(pause_time)
-            
-        except Exception as e:
-            logger.error(f"❌ Erro ao coletar dados do {name}: {e}")
-            continue
+        logger.info(f"✅ Mercado Livre concluído em {duration:.1f}s - {len(all_products)} produtos coletados")
+        
+    except Exception as e:
+        logger.error(f"❌ Erro ao coletar dados do Mercado Livre: {e}")
+        all_products = []
     
     # Remove duplicatas baseado no link
     logger.info(f"\n{'='*50}")
@@ -900,14 +1368,15 @@ def main():
     products_dict = [asdict(product) for product in unique_products]
     
     # Salva em arquivo JSON
-    output_file = "ps5_products.json"
+    output_file = "mercado_livre_products.json"
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(products_dict, f, ensure_ascii=False, indent=2)
     
     logger.info(f"💾 Dados salvos em {output_file}")
     
     # Salva em Excel também
-    save_to_excel(unique_products)
+    excel_file = "mercado_livre_products.xlsx"
+    save_to_excel(unique_products, excel_file)
     
     # Gera estatísticas
     stats = generate_statistics(unique_products)
@@ -923,13 +1392,18 @@ def main():
     logger.info(f"🎮 Com controles: {stats['com_controles']}")
     logger.info(f"🎯 Com jogos: {stats['com_jogos']}")
     
-    logger.info(f"\n📊 Distribuição por site:")
-    for site, count in stats['por_site'].items():
-        logger.info(f"  {site}: {count}")
+    logger.info(f"\n📊 Distribuição por tipo de console:")
+    for tipo, count in stats['por_modelo'].items():
+        logger.info(f"  {tipo}: {count}")
     
-    logger.info(f"\n🎮 Distribuição por modelo:")
-    for model, count in stats['por_modelo'].items():
-        logger.info(f"  {model}: {count}")
+    logger.info(f"\n🏷️ Distribuição por marca:")
+    marcas = {}
+    for product in unique_products:
+        marca = product.marca or "Não especificada"
+        marcas[marca] = marcas.get(marca, 0) + 1
+    
+    for marca, count in marcas.items():
+        logger.info(f"  {marca}: {count}")
     
     if stats['cores']:
         logger.info(f"\n🎨 Cores encontradas:")
@@ -941,12 +1415,14 @@ def main():
         for storage, count in stats['armazenamento'].items():
             logger.info(f"  {storage}: {count}")
     
-    logger.info(f"\n✅ COLETA CONCLUÍDA COM SUCESSO!")
+    logger.info(f"\n✅ COLETA DO MERCADO LIVRE CONCLUÍDA COM SUCESSO!")
     logger.info(f"📁 Arquivos gerados:")
     logger.info(f"  - {output_file}")
-    logger.info(f"  - ps5_products.xlsx")
+    logger.info(f"  - {excel_file}")
     logger.info(f"  - scraper.log")
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    debug_mode = "--debug" in sys.argv
+    main(debug_mode)
