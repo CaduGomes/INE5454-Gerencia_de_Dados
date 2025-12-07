@@ -18,6 +18,7 @@ export interface RawProduct {
   site_origem: string;
   data_coleta: string;
   disponibilidade: string;
+  image_url: string;
 }
 
 /**
@@ -42,6 +43,8 @@ export interface Product {
   site_origem: string;
   data_coleta: string;
   disponibilidade: string;
+  image_url: string;
+  originalIndex: number;
 }
 
 /**
@@ -59,7 +62,7 @@ export interface SearchFilters {
   inclui_jogos?: boolean;
   espacoMin?: number;
   espacoMax?: number;
-  sortBy?: 'preco_asc' | 'preco_desc';
+  sortBy?: 'original' | 'preco_asc' | 'preco_desc';
   page?: number;
   limit?: number;
 }

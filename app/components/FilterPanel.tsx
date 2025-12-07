@@ -55,7 +55,7 @@ export default function FilterPanel({
 
   const clearFilters = () => {
     const cleared: SearchFilters = {
-      sortBy: 'preco_asc',
+      sortBy: 'original',
       page: 1,
       limit: 20,
     };
@@ -273,12 +273,13 @@ export default function FilterPanel({
           Ordenar por
         </label>
         <select
-          value={localFilters.sortBy || 'preco_asc'}
+          value={localFilters.sortBy || 'original'}
           onChange={(e) =>
-            handleFilterChange('sortBy', e.target.value as 'preco_asc' | 'preco_desc')
+            handleFilterChange('sortBy', e.target.value as 'original' | 'preco_asc' | 'preco_desc')
           }
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
         >
+          <option value="original">Ordem Original</option>
           <option value="preco_asc">Preço: Menor para Maior</option>
           <option value="preco_desc">Preço: Maior para Menor</option>
         </select>

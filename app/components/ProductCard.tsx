@@ -1,6 +1,7 @@
 'use client';
 
 import { Product } from '@/lib/types';
+import Image from 'next/image';
 
 interface ProductCardProps {
   product: Product;
@@ -24,6 +25,18 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden flex flex-col h-full">
+      
+      {/* Container da Imagem */}
+      <div className="relative w-full h-48 bg-gray-50 border-b border-gray-100">
+        <Image
+          src={product.image_url}
+          alt={product.nome_anuncio}
+          fill
+          className="object-contain p-4"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      </div>
+
       <div className="p-4 flex-1 flex flex-col">
         <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
           {product.nome_anuncio}
@@ -93,4 +106,3 @@ export default function ProductCard({ product }: ProductCardProps) {
     </div>
   );
 }
-

@@ -10,7 +10,7 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<SearchFilters>({
-    sortBy: 'preco_asc',
+    sortBy: 'original',
     page: 1,
     limit: 20,
   });

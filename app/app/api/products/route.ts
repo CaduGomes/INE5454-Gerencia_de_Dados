@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       inclui_jogos: searchParams.get('inclui_jogos') === 'true' ? true : undefined,
       espacoMin: searchParams.get('espacoMin') ? parseFloat(searchParams.get('espacoMin')!) : undefined,
       espacoMax: searchParams.get('espacoMax') ? parseFloat(searchParams.get('espacoMax')!) : undefined,
-      sortBy: (searchParams.get('sortBy') as 'preco_asc' | 'preco_desc') || 'preco_asc',
+      sortBy: (searchParams.get('sortBy') as 'original' | 'preco_asc' | 'preco_desc') || 'original',
       page: searchParams.get('page') ? parseInt(searchParams.get('page')!) : 1,
       limit: searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 20,
     };
@@ -86,6 +86,8 @@ export async function GET(request: NextRequest) {
       products.sort((a, b) => a.preco_vista - b.preco_vista);
     } else if (filters.sortBy === 'preco_desc') {
       products.sort((a, b) => b.preco_vista - a.preco_vista);
+    } else if (filters.sortBy === 'original' || !filters.sortBy) {
+      products.sort((a, b) => a.originalIndex - b.originalIndex);
     }
 
     // Paginação

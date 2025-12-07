@@ -26,12 +26,12 @@ export function loadProducts(): Product[] {
 
     const allRawProducts = [...magazineluizaData, ...mercadolivreData];
 
-    // Normaliza os produtos
-    const normalizedProducts: Product[] = allRawProducts.map((raw) => ({
+    const normalizedProducts: Product[] = allRawProducts.map((raw, index) => ({
       ...raw,
       preco_vista: normalizePrice(raw.preco_vista),
       espaco_armazenamento_gb: extractStorageInGB(raw.espaco_armazenamento),
       inclui_jogos: hasGames(raw.jogos_incluidos),
+      originalIndex: index,
     }));
 
     cachedProducts = normalizedProducts;
