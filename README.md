@@ -163,3 +163,133 @@ O scraper irá gerar:
 - Gera logs detalhados para debugging
 - Suporta saída em JSON e Excel
 - Inclui estatísticas detalhadas dos dados coletados
+
+---
+
+## Sistema de Busca de Video Games (Next.js)
+
+Aplicação web desenvolvida em Next.js 16.0.7 para buscar, filtrar e ordenar video games a partir dos dados coletados pelo scraper.
+
+### Funcionalidades
+
+- 🔍 **Busca em tempo real** - Busca por texto em todos os campos do produto
+- 🎯 **Filtros avançados**:
+  - Range de preço (mínimo e máximo)
+  - Modelo (select múltiplo)
+  - Tipo (select múltiplo)
+  - Marca (select múltiplo)
+  - Site de origem (checkboxes)
+  - Inclui controles (Sim/Não)
+  - Inclui jogos (checkbox)
+  - Espaço em disco (range em GB)
+- 📊 **Ordenação** - Por preço (menor para maior / maior para menor)
+- 📱 **Design responsivo** - Interface otimizada para mobile e desktop
+- 📄 **Paginação** - Navegação entre páginas de resultados
+
+### Instalação e Execução
+
+#### 1. Instalar dependências
+```bash
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+```
+
+#### 2. Executar em modo desenvolvimento
+```bash
+npm run dev
+# ou
+yarn dev
+# ou
+pnpm dev
+```
+
+A aplicação estará disponível em `http://localhost:3000`
+
+#### 3. Build para produção
+```bash
+npm run build
+npm start
+```
+
+### Estrutura do Projeto
+
+```
+├── app/
+│   ├── api/
+│   │   └── products/
+│   │       └── route.ts          # API endpoint de busca/filtro
+│   ├── globals.css                # Estilos globais (Tailwind)
+│   ├── layout.tsx                 # Layout principal
+│   └── page.tsx                   # Página principal
+├── components/
+│   ├── FilterPanel.tsx            # Painel de filtros
+│   ├── ProductCard.tsx            # Card de produto
+│   ├── ProductList.tsx            # Lista de produtos
+│   └── SearchBar.tsx              # Barra de busca
+├── lib/
+│   ├── data-loader.ts             # Carregamento e processamento dos JSONs
+│   ├── types.ts                   # Tipos TypeScript
+│   └── utils.ts                   # Funções utilitárias
+├── magazineluiza_products.json    # Dados do Magazine Luiza
+└── mercadolivre_products.json     # Dados do Mercado Livre
+```
+
+### Tecnologias Utilizadas
+
+- **Next.js 16.0.7** - Framework React com App Router
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Estilização
+- **React 18** - Biblioteca UI
+
+### API Endpoints
+
+#### GET `/api/products`
+
+Busca e filtra produtos com os seguintes parâmetros de query:
+
+- `query` - Texto de busca
+- `precoMin` - Preço mínimo
+- `precoMax` - Preço máximo
+- `modelo` - Modelos (separados por vírgula)
+- `tipo` - Tipos (separados por vírgula)
+- `marca` - Marcas (separados por vírgula)
+- `site_origem` - Sites (separados por vírgula)
+- `inclui_controles` - "Sim" ou "Não"
+- `inclui_jogos` - "true" ou "false"
+- `espacoMin` - Espaço mínimo em GB
+- `espacoMax` - Espaço máximo em GB
+- `sortBy` - "preco_asc" ou "preco_desc"
+- `page` - Número da página (padrão: 1)
+- `limit` - Itens por página (padrão: 20)
+
+**Exemplo de resposta:**
+```json
+{
+  "products": [...],
+  "total": 150,
+  "page": 1,
+  "limit": 20,
+  "totalPages": 8,
+  "filters": {
+    "modelos": [...],
+    "tipos": [...],
+    "marcas": [...],
+    "sites": [...],
+    "precoMin": 0,
+    "precoMax": 10000,
+    "espacoMin": 0,
+    "espacoMax": 2000
+  }
+}
+```
+
+### Notas Técnicas
+
+- Os dados são carregados dos arquivos JSON na inicialização e mantidos em cache
+- Preços são normalizados para lidar com diferentes formatos ("3999.00" vs "4.499")
+- Espaço em disco é extraído do texto livre usando regex e convertido para GB
+- A busca é case-insensitive e busca em múltiplos campos
+- Interface mobile-friendly com filtros em drawer no mobile

@@ -1,0 +1,640 @@
+2025-11-09 21:15:10,122 - INFO - 🎮 === INICIANDO COLETA DE DADOS DE CONSOLES ===
+2025-11-09 21:15:10,122 - INFO - 📅 Data/Hora: 09/11/2025 21:15:10
+2025-11-09 21:15:10,122 - INFO - 📄 Limite máximo de páginas por site: 3 (configurado via MAX_PAGES_PER_SITE)
+2025-11-09 21:15:10,122 - INFO - 
+============================================================
+2025-11-09 21:15:10,122 - INFO - 🌐 INICIANDO COLETA DO MAGAZINE LUIZA
+2025-11-09 21:15:10,122 - INFO - ============================================================
+2025-11-09 21:15:10,123 - INFO - 🌐 URLs para coletar: 6
+2025-11-09 21:15:10,123 - INFO - 📋 URLs:
+2025-11-09 21:15:10,123 - INFO -   1. https://www.magazineluiza.com.br/busca/ps5/
+2025-11-09 21:15:10,123 - INFO -   2. https://www.magazineluiza.com.br/busca/xbox-series-x/
+2025-11-09 21:15:10,123 - INFO -   3. https://www.magazineluiza.com.br/busca/xbox-series-s/
+2025-11-09 21:15:10,123 - INFO -   4. https://www.magazineluiza.com.br/busca/nintendo-switch/
+2025-11-09 21:15:10,123 - INFO -   5. https://www.magazineluiza.com.br/busca/nintendo-switch-2/
+2025-11-09 21:15:10,123 - INFO -   6. https://www.magazineluiza.com.br/busca/switch-2/
+2025-11-09 21:15:10,123 - INFO - 🔧 Criando driver do Chrome para Magazine Luiza...
+2025-11-09 21:15:10,123 - INFO - ====== WebDriver manager ======
+2025-11-09 21:15:10,178 - INFO - Get LATEST chromedriver version for google-chrome
+2025-11-09 21:15:10,269 - INFO - Get LATEST chromedriver version for google-chrome
+2025-11-09 21:15:10,343 - INFO - Driver [/home/cadu/.wdm/drivers/chromedriver/linux64/142.0.7444.61/chromedriver-linux64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-11-09 21:15:10,343 - INFO - 🚀 Usando ChromeDriver em: /home/cadu/.wdm/drivers/chromedriver/linux64/142.0.7444.61/chromedriver-linux64/chromedriver
+2025-11-09 21:15:11,073 - INFO - ✅ Driver criado com sucesso para Magazine Luiza
+2025-11-09 21:15:11,073 - INFO - 
+============================================================
+2025-11-09 21:15:11,073 - INFO - 🌐 PROCESSANDO URL 1/6: https://www.magazineluiza.com.br/busca/ps5/
+2025-11-09 21:15:11,073 - INFO - ============================================================
+2025-11-09 21:15:11,073 - INFO - 🌐 Navegando para: https://www.magazineluiza.com.br/busca/ps5/
+2025-11-09 21:15:11,073 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:15:34,145 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:15:34,148 - INFO - ✅ Página carregada completamente
+2025-11-09 21:15:37,163 - INFO - 📄 Processando página 1...
+2025-11-09 21:15:37,163 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:15:38,238 - INFO - 📋 Encontrados 59 produtos na página
+2025-11-09 21:15:40,024 - INFO - ✅ Página processada: 59 produtos coletados
+2025-11-09 21:15:40,024 - INFO - 📦 Página 1: 59 produtos coletados (Total: 59)
+2025-11-09 21:15:42,057 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:15:42,106 - INFO - ✅ Página carregada completamente
+2025-11-09 21:15:45,121 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:15:49,096 - INFO - 📄 Processando página 2...
+2025-11-09 21:15:49,096 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:15:50,189 - INFO - 📋 Encontrados 58 produtos na página
+2025-11-09 21:15:52,132 - INFO - ✅ Página processada: 58 produtos coletados
+2025-11-09 21:15:52,133 - INFO - 📦 Página 2: 58 produtos coletados (Total: 117)
+2025-11-09 21:15:54,157 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:15:54,200 - INFO - ✅ Página carregada completamente
+2025-11-09 21:15:57,215 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:16:00,590 - INFO - 📄 Processando página 3...
+2025-11-09 21:16:00,590 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:16:01,693 - INFO - 📋 Encontrados 60 produtos na página
+2025-11-09 21:16:03,720 - INFO - ✅ Página processada: 60 produtos coletados
+2025-11-09 21:16:03,721 - INFO - 📦 Página 3: 60 produtos coletados (Total: 177)
+2025-11-09 21:16:05,751 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:16:05,780 - INFO - ✅ Página carregada completamente
+2025-11-09 21:16:08,795 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:16:11,184 - INFO - 🎉 Coleta de https://www.magazineluiza.com.br/busca/ps5/ concluída: 177 produtos em 4 páginas
+2025-11-09 21:16:11,184 - INFO - ✅ URL 1 concluída: 177 produtos coletados
+2025-11-09 21:16:11,184 - INFO - ⏳ Pausando 3.6s antes da próxima URL...
+2025-11-09 21:16:14,810 - INFO - 
+============================================================
+2025-11-09 21:16:14,810 - INFO - 🌐 PROCESSANDO URL 2/6: https://www.magazineluiza.com.br/busca/xbox-series-x/
+2025-11-09 21:16:14,810 - INFO - ============================================================
+2025-11-09 21:16:14,810 - INFO - 🌐 Navegando para: https://www.magazineluiza.com.br/busca/xbox-series-x/
+2025-11-09 21:16:14,810 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:16:32,005 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:16:32,013 - INFO - ✅ Página carregada completamente
+2025-11-09 21:16:35,028 - INFO - 📄 Processando página 1...
+2025-11-09 21:16:35,028 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:16:35,900 - INFO - 📋 Encontrados 53 produtos na página
+2025-11-09 21:16:37,537 - INFO - ✅ Página processada: 53 produtos coletados
+2025-11-09 21:16:37,537 - INFO - 📦 Página 1: 53 produtos coletados (Total: 53)
+2025-11-09 21:16:39,571 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:16:39,620 - INFO - ✅ Página carregada completamente
+2025-11-09 21:16:42,635 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:16:45,803 - INFO - 📄 Processando página 2...
+2025-11-09 21:16:45,803 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:16:46,894 - INFO - 📋 Encontrados 58 produtos na página
+2025-11-09 21:16:48,967 - INFO - ✅ Página processada: 58 produtos coletados
+2025-11-09 21:16:48,967 - INFO - 📦 Página 2: 58 produtos coletados (Total: 111)
+2025-11-09 21:16:50,996 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:16:51,035 - INFO - ✅ Página carregada completamente
+2025-11-09 21:16:54,050 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:16:56,180 - INFO - 📄 Processando página 3...
+2025-11-09 21:16:56,180 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:16:57,228 - INFO - 📋 Encontrados 56 produtos na página
+2025-11-09 21:16:59,315 - INFO - ✅ Página processada: 56 produtos coletados
+2025-11-09 21:16:59,315 - INFO - 📦 Página 3: 56 produtos coletados (Total: 167)
+2025-11-09 21:17:01,344 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:17:01,382 - INFO - ✅ Página carregada completamente
+2025-11-09 21:17:04,397 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:17:07,314 - INFO - 🎉 Coleta de https://www.magazineluiza.com.br/busca/xbox-series-x/ concluída: 167 produtos em 4 páginas
+2025-11-09 21:17:07,314 - INFO - ✅ URL 2 concluída: 167 produtos coletados
+2025-11-09 21:17:07,314 - INFO - ⏳ Pausando 5.6s antes da próxima URL...
+2025-11-09 21:17:12,929 - INFO - 
+============================================================
+2025-11-09 21:17:12,929 - INFO - 🌐 PROCESSANDO URL 3/6: https://www.magazineluiza.com.br/busca/xbox-series-s/
+2025-11-09 21:17:12,929 - INFO - ============================================================
+2025-11-09 21:17:12,929 - INFO - 🌐 Navegando para: https://www.magazineluiza.com.br/busca/xbox-series-s/
+2025-11-09 21:17:12,929 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:17:37,366 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:17:37,374 - INFO - ✅ Página carregada completamente
+2025-11-09 21:17:40,389 - INFO - 📄 Processando página 1...
+2025-11-09 21:17:40,389 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:17:41,257 - INFO - 📋 Encontrados 53 produtos na página
+2025-11-09 21:17:42,923 - INFO - ✅ Página processada: 53 produtos coletados
+2025-11-09 21:17:42,923 - INFO - 📦 Página 1: 53 produtos coletados (Total: 53)
+2025-11-09 21:17:44,956 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:17:44,997 - INFO - ✅ Página carregada completamente
+2025-11-09 21:17:48,012 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:17:50,263 - INFO - 📄 Processando página 2...
+2025-11-09 21:17:50,263 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:17:51,320 - INFO - 📋 Encontrados 56 produtos na página
+2025-11-09 21:17:53,382 - INFO - ✅ Página processada: 56 produtos coletados
+2025-11-09 21:17:53,382 - INFO - 📦 Página 2: 56 produtos coletados (Total: 109)
+2025-11-09 21:17:55,432 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:17:55,461 - INFO - ✅ Página carregada completamente
+2025-11-09 21:17:58,476 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:18:00,684 - INFO - 📄 Processando página 3...
+2025-11-09 21:18:00,684 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:18:01,834 - INFO - 📋 Encontrados 54 produtos na página
+2025-11-09 21:18:03,906 - INFO - ✅ Página processada: 54 produtos coletados
+2025-11-09 21:18:03,906 - INFO - 📦 Página 3: 54 produtos coletados (Total: 163)
+2025-11-09 21:18:05,932 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:18:05,974 - INFO - ✅ Página carregada completamente
+2025-11-09 21:18:08,989 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:18:12,455 - INFO - 🎉 Coleta de https://www.magazineluiza.com.br/busca/xbox-series-s/ concluída: 163 produtos em 4 páginas
+2025-11-09 21:18:12,455 - INFO - ✅ URL 3 concluída: 163 produtos coletados
+2025-11-09 21:18:12,455 - INFO - ⏳ Pausando 3.1s antes da próxima URL...
+2025-11-09 21:18:15,616 - INFO - 
+============================================================
+2025-11-09 21:18:15,616 - INFO - 🌐 PROCESSANDO URL 4/6: https://www.magazineluiza.com.br/busca/nintendo-switch/
+2025-11-09 21:18:15,617 - INFO - ============================================================
+2025-11-09 21:18:15,617 - INFO - 🌐 Navegando para: https://www.magazineluiza.com.br/busca/nintendo-switch/
+2025-11-09 21:18:15,617 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:18:28,346 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:18:28,353 - INFO - ✅ Página carregada completamente
+2025-11-09 21:18:31,368 - INFO - 📄 Processando página 1...
+2025-11-09 21:18:31,368 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:18:32,288 - INFO - 📋 Encontrados 59 produtos na página
+2025-11-09 21:18:34,026 - INFO - ✅ Página processada: 59 produtos coletados
+2025-11-09 21:18:34,026 - INFO - 📦 Página 1: 59 produtos coletados (Total: 59)
+2025-11-09 21:18:36,059 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:18:36,110 - INFO - ✅ Página carregada completamente
+2025-11-09 21:18:39,117 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:18:41,472 - INFO - 📄 Processando página 2...
+2025-11-09 21:18:41,472 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:18:42,545 - INFO - 📋 Encontrados 56 produtos na página
+2025-11-09 21:18:44,438 - INFO - ✅ Página processada: 56 produtos coletados
+2025-11-09 21:18:44,438 - INFO - 📦 Página 2: 56 produtos coletados (Total: 115)
+2025-11-09 21:18:46,466 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:18:46,508 - INFO - ✅ Página carregada completamente
+2025-11-09 21:18:49,523 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:18:52,231 - INFO - 📄 Processando página 3...
+2025-11-09 21:18:52,231 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:18:53,345 - INFO - 📋 Encontrados 52 produtos na página
+2025-11-09 21:18:55,177 - INFO - ✅ Página processada: 52 produtos coletados
+2025-11-09 21:18:55,177 - INFO - 📦 Página 3: 52 produtos coletados (Total: 167)
+2025-11-09 21:18:57,207 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:18:57,244 - INFO - ✅ Página carregada completamente
+2025-11-09 21:19:00,259 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:19:03,554 - INFO - 🎉 Coleta de https://www.magazineluiza.com.br/busca/nintendo-switch/ concluída: 167 produtos em 4 páginas
+2025-11-09 21:19:03,554 - INFO - ✅ URL 4 concluída: 167 produtos coletados
+2025-11-09 21:19:03,555 - INFO - ⏳ Pausando 5.1s antes da próxima URL...
+2025-11-09 21:19:08,675 - INFO - 
+============================================================
+2025-11-09 21:19:08,675 - INFO - 🌐 PROCESSANDO URL 5/6: https://www.magazineluiza.com.br/busca/nintendo-switch-2/
+2025-11-09 21:19:08,675 - INFO - ============================================================
+2025-11-09 21:19:08,675 - INFO - 🌐 Navegando para: https://www.magazineluiza.com.br/busca/nintendo-switch-2/
+2025-11-09 21:19:08,675 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:19:32,383 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:19:32,391 - INFO - ✅ Página carregada completamente
+2025-11-09 21:19:35,406 - INFO - 📄 Processando página 1...
+2025-11-09 21:19:35,406 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:19:36,342 - INFO - 📋 Encontrados 60 produtos na página
+2025-11-09 21:19:38,076 - INFO - ✅ Página processada: 60 produtos coletados
+2025-11-09 21:19:38,076 - INFO - 📦 Página 1: 60 produtos coletados (Total: 60)
+2025-11-09 21:19:40,122 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:19:40,167 - INFO - ✅ Página carregada completamente
+2025-11-09 21:19:43,179 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:19:46,129 - INFO - 📄 Processando página 2...
+2025-11-09 21:19:46,129 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:19:47,138 - INFO - 📋 Encontrados 59 produtos na página
+2025-11-09 21:19:49,070 - INFO - ✅ Página processada: 59 produtos coletados
+2025-11-09 21:19:49,070 - INFO - 📦 Página 2: 59 produtos coletados (Total: 119)
+2025-11-09 21:19:51,099 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:19:51,127 - INFO - ✅ Página carregada completamente
+2025-11-09 21:19:54,142 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:19:58,032 - INFO - 📄 Processando página 3...
+2025-11-09 21:19:58,032 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:19:59,087 - INFO - 📋 Encontrados 58 produtos na página
+2025-11-09 21:20:01,065 - INFO - ✅ Página processada: 58 produtos coletados
+2025-11-09 21:20:01,066 - INFO - 📦 Página 3: 58 produtos coletados (Total: 177)
+2025-11-09 21:20:03,094 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:20:03,120 - INFO - ✅ Página carregada completamente
+2025-11-09 21:20:06,135 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:20:08,339 - INFO - 🎉 Coleta de https://www.magazineluiza.com.br/busca/nintendo-switch-2/ concluída: 177 produtos em 4 páginas
+2025-11-09 21:20:08,339 - INFO - ✅ URL 5 concluída: 177 produtos coletados
+2025-11-09 21:20:08,339 - INFO - ⏳ Pausando 4.3s antes da próxima URL...
+2025-11-09 21:20:12,710 - INFO - 
+============================================================
+2025-11-09 21:20:12,711 - INFO - 🌐 PROCESSANDO URL 6/6: https://www.magazineluiza.com.br/busca/switch-2/
+2025-11-09 21:20:12,711 - INFO - ============================================================
+2025-11-09 21:20:12,711 - INFO - 🌐 Navegando para: https://www.magazineluiza.com.br/busca/switch-2/
+2025-11-09 21:20:12,711 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:20:25,784 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:20:25,789 - INFO - ✅ Página carregada completamente
+2025-11-09 21:20:28,796 - INFO - 📄 Processando página 1...
+2025-11-09 21:20:28,796 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:20:29,685 - INFO - 📋 Encontrados 60 produtos na página
+2025-11-09 21:20:31,491 - INFO - ✅ Página processada: 60 produtos coletados
+2025-11-09 21:20:31,491 - INFO - 📦 Página 1: 60 produtos coletados (Total: 60)
+2025-11-09 21:20:33,523 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:20:33,562 - INFO - ✅ Página carregada completamente
+2025-11-09 21:20:36,577 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:20:40,491 - INFO - 📄 Processando página 2...
+2025-11-09 21:20:40,491 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:20:41,537 - INFO - 📋 Encontrados 57 produtos na página
+2025-11-09 21:20:43,457 - INFO - ✅ Página processada: 57 produtos coletados
+2025-11-09 21:20:43,457 - INFO - 📦 Página 2: 57 produtos coletados (Total: 117)
+2025-11-09 21:20:45,487 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:20:45,520 - INFO - ✅ Página carregada completamente
+2025-11-09 21:20:48,522 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:20:51,640 - INFO - 📄 Processando página 3...
+2025-11-09 21:20:51,640 - INFO - 🔍 Procurando por produtos na página...
+2025-11-09 21:20:52,769 - INFO - 📋 Encontrados 58 produtos na página
+2025-11-09 21:20:54,869 - INFO - ✅ Página processada: 58 produtos coletados
+2025-11-09 21:20:54,870 - INFO - 📦 Página 3: 58 produtos coletados (Total: 175)
+2025-11-09 21:20:56,900 - INFO - 🔍 Botão 'Próxima página' encontrado com seletor: button[aria-label='Go to next page']
+2025-11-09 21:20:56,930 - INFO - ✅ Página carregada completamente
+2025-11-09 21:20:59,945 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:21:03,236 - INFO - 🎉 Coleta de https://www.magazineluiza.com.br/busca/switch-2/ concluída: 175 produtos em 4 páginas
+2025-11-09 21:21:03,236 - INFO - ✅ URL 6 concluída: 175 produtos coletados
+2025-11-09 21:21:03,236 - INFO - 🎉 Coleta do Magazine Luiza concluída! Total: 1026 produtos
+2025-11-09 21:21:03,237 - INFO - 🔒 Fechando driver do Magazine Luiza...
+2025-11-09 21:21:03,340 - INFO - ✅ Magazine Luiza concluído em 353.2s - 1026 produtos coletados
+2025-11-09 21:21:03,341 - INFO - 
+⏳ Pausando 5s antes de iniciar Mercado Livre...
+2025-11-09 21:21:08,366 - INFO - 
+============================================================
+2025-11-09 21:21:08,366 - INFO - 🌐 INICIANDO COLETA DO MERCADO LIVRE
+2025-11-09 21:21:08,366 - INFO - ============================================================
+2025-11-09 21:21:08,366 - INFO - 🌐 URLs para coletar: 6
+2025-11-09 21:21:08,366 - INFO - 📋 URLs:
+2025-11-09 21:21:08,367 - INFO -   1. https://lista.mercadolivre.com.br/ps5
+2025-11-09 21:21:08,367 - INFO -   2. https://lista.mercadolivre.com.br/xbox-series-x
+2025-11-09 21:21:08,367 - INFO -   3. https://lista.mercadolivre.com.br/xbox-series-s
+2025-11-09 21:21:08,367 - INFO -   4. https://lista.mercadolivre.com.br/nintendo-switch
+2025-11-09 21:21:08,367 - INFO -   5. https://lista.mercadolivre.com.br/nintendo-switch-2
+2025-11-09 21:21:08,367 - INFO -   6. https://lista.mercadolivre.com.br/switch-2
+2025-11-09 21:21:08,367 - INFO - 🔧 Criando driver do Chrome para MercadoLivre...
+2025-11-09 21:21:08,367 - INFO - ====== WebDriver manager ======
+2025-11-09 21:21:08,421 - INFO - Get LATEST chromedriver version for google-chrome
+2025-11-09 21:21:08,517 - INFO - Get LATEST chromedriver version for google-chrome
+2025-11-09 21:21:08,600 - INFO - Driver [/home/cadu/.wdm/drivers/chromedriver/linux64/142.0.7444.61/chromedriver-linux64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-11-09 21:21:08,600 - INFO - 🚀 Usando ChromeDriver em: /home/cadu/.wdm/drivers/chromedriver/linux64/142.0.7444.61/chromedriver-linux64/chromedriver
+2025-11-09 21:21:09,333 - INFO - ✅ Driver criado com sucesso para MercadoLivre
+2025-11-09 21:21:09,333 - INFO - 
+============================================================
+2025-11-09 21:21:09,333 - INFO - 🌐 PROCESSANDO URL 1/6: https://lista.mercadolivre.com.br/ps5
+2025-11-09 21:21:09,333 - INFO - ============================================================
+2025-11-09 21:21:09,333 - INFO - 🌐 Navegando para: https://lista.mercadolivre.com.br/ps5
+2025-11-09 21:21:09,333 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:21:10,096 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:21:10,099 - INFO - ✅ Página carregada completamente
+2025-11-09 21:21:13,114 - INFO - 📄 Processando página 1...
+2025-11-09 21:21:13,114 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:21:13,131 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:21:14,602 - INFO - ✅ Página processada: 17 produtos coletados
+2025-11-09 21:21:14,602 - INFO - 📦 Página 1: 17 produtos coletados (Total: 17)
+2025-11-09 21:21:16,643 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:21:17,929 - INFO - ✅ Página carregada completamente
+2025-11-09 21:21:20,933 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:21:24,898 - INFO - 📄 Processando página 2...
+2025-11-09 21:21:24,898 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:21:24,909 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:21:26,414 - INFO - ✅ Página processada: 17 produtos coletados
+2025-11-09 21:21:26,414 - INFO - 📦 Página 2: 17 produtos coletados (Total: 34)
+2025-11-09 21:21:28,448 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:21:29,522 - INFO - ✅ Página carregada completamente
+2025-11-09 21:21:32,537 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:21:36,350 - INFO - 📄 Processando página 3...
+2025-11-09 21:21:36,351 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:21:36,362 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:21:37,824 - INFO - ✅ Página processada: 17 produtos coletados
+2025-11-09 21:21:37,824 - INFO - 📦 Página 3: 17 produtos coletados (Total: 51)
+2025-11-09 21:21:39,856 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:21:40,811 - INFO - ✅ Página carregada completamente
+2025-11-09 21:21:43,826 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:21:45,864 - INFO - 🎉 Coleta de https://lista.mercadolivre.com.br/ps5 concluída: 51 produtos em 4 páginas
+2025-11-09 21:21:45,864 - INFO - ✅ URL 1 concluída: 51 produtos coletados
+2025-11-09 21:21:45,864 - INFO - ⏳ Pausando 4.3s antes da próxima URL...
+2025-11-09 21:21:50,229 - INFO - 
+============================================================
+2025-11-09 21:21:50,229 - INFO - 🌐 PROCESSANDO URL 2/6: https://lista.mercadolivre.com.br/xbox-series-x
+2025-11-09 21:21:50,229 - INFO - ============================================================
+2025-11-09 21:21:50,229 - INFO - 🌐 Navegando para: https://lista.mercadolivre.com.br/xbox-series-x
+2025-11-09 21:21:50,230 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:21:51,491 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:21:51,502 - INFO - ✅ Página carregada completamente
+2025-11-09 21:21:54,517 - INFO - 📄 Processando página 1...
+2025-11-09 21:21:54,517 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:21:54,528 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:21:56,060 - INFO - ✅ Página processada: 11 produtos coletados
+2025-11-09 21:21:56,060 - INFO - 📦 Página 1: 11 produtos coletados (Total: 11)
+2025-11-09 21:21:58,097 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:21:58,827 - INFO - ✅ Página carregada completamente
+2025-11-09 21:22:01,834 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:22:05,162 - INFO - 📄 Processando página 2...
+2025-11-09 21:22:05,162 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:22:05,174 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:22:06,678 - INFO - ✅ Página processada: 11 produtos coletados
+2025-11-09 21:22:06,678 - INFO - 📦 Página 2: 11 produtos coletados (Total: 22)
+2025-11-09 21:22:08,710 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:22:10,206 - INFO - ✅ Página carregada completamente
+2025-11-09 21:22:13,221 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:22:17,002 - INFO - 📄 Processando página 3...
+2025-11-09 21:22:17,002 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:22:17,014 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:22:18,496 - INFO - ✅ Página processada: 11 produtos coletados
+2025-11-09 21:22:18,496 - INFO - 📦 Página 3: 11 produtos coletados (Total: 33)
+2025-11-09 21:22:20,527 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:22:21,283 - INFO - ✅ Página carregada completamente
+2025-11-09 21:22:24,299 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:22:26,506 - INFO - 🎉 Coleta de https://lista.mercadolivre.com.br/xbox-series-x concluída: 33 produtos em 4 páginas
+2025-11-09 21:22:26,506 - INFO - ✅ URL 2 concluída: 33 produtos coletados
+2025-11-09 21:22:26,506 - INFO - ⏳ Pausando 5.2s antes da próxima URL...
+2025-11-09 21:22:31,691 - INFO - 
+============================================================
+2025-11-09 21:22:31,691 - INFO - 🌐 PROCESSANDO URL 3/6: https://lista.mercadolivre.com.br/xbox-series-s
+2025-11-09 21:22:31,691 - INFO - ============================================================
+2025-11-09 21:22:31,691 - INFO - 🌐 Navegando para: https://lista.mercadolivre.com.br/xbox-series-s
+2025-11-09 21:22:31,691 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:22:32,768 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:22:32,778 - INFO - ✅ Página carregada completamente
+2025-11-09 21:22:35,793 - INFO - 📄 Processando página 1...
+2025-11-09 21:22:35,793 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:22:35,804 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:22:37,256 - INFO - ✅ Página processada: 21 produtos coletados
+2025-11-09 21:22:37,256 - INFO - 📦 Página 1: 21 produtos coletados (Total: 21)
+2025-11-09 21:22:39,288 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:22:40,038 - INFO - ✅ Página carregada completamente
+2025-11-09 21:22:43,053 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:22:47,015 - INFO - 📄 Processando página 2...
+2025-11-09 21:22:47,015 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:22:47,027 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:22:48,511 - INFO - ✅ Página processada: 21 produtos coletados
+2025-11-09 21:22:48,511 - INFO - 📦 Página 2: 21 produtos coletados (Total: 42)
+2025-11-09 21:22:50,543 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:22:51,403 - INFO - ✅ Página carregada completamente
+2025-11-09 21:22:54,409 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:22:56,657 - INFO - 📄 Processando página 3...
+2025-11-09 21:22:56,657 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:22:56,668 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:22:58,086 - INFO - ✅ Página processada: 21 produtos coletados
+2025-11-09 21:22:58,086 - INFO - 📦 Página 3: 21 produtos coletados (Total: 63)
+2025-11-09 21:23:00,119 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:23:01,118 - INFO - ✅ Página carregada completamente
+2025-11-09 21:23:04,133 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:23:07,253 - INFO - 🎉 Coleta de https://lista.mercadolivre.com.br/xbox-series-s concluída: 63 produtos em 4 páginas
+2025-11-09 21:23:07,254 - INFO - ✅ URL 3 concluída: 63 produtos coletados
+2025-11-09 21:23:07,254 - INFO - ⏳ Pausando 3.3s antes da próxima URL...
+2025-11-09 21:23:10,613 - INFO - 
+============================================================
+2025-11-09 21:23:10,613 - INFO - 🌐 PROCESSANDO URL 4/6: https://lista.mercadolivre.com.br/nintendo-switch
+2025-11-09 21:23:10,613 - INFO - ============================================================
+2025-11-09 21:23:10,613 - INFO - 🌐 Navegando para: https://lista.mercadolivre.com.br/nintendo-switch
+2025-11-09 21:23:10,613 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:23:11,811 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:23:11,821 - INFO - ✅ Página carregada completamente
+2025-11-09 21:23:14,836 - INFO - 📄 Processando página 1...
+2025-11-09 21:23:14,836 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:23:14,848 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:23:16,224 - INFO - ✅ Página processada: 32 produtos coletados
+2025-11-09 21:23:16,224 - INFO - 📦 Página 1: 32 produtos coletados (Total: 32)
+2025-11-09 21:23:18,256 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:23:19,063 - INFO - ✅ Página carregada completamente
+2025-11-09 21:23:22,066 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:23:25,597 - INFO - 📄 Processando página 2...
+2025-11-09 21:23:25,598 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:23:25,609 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:23:27,009 - INFO - ✅ Página processada: 32 produtos coletados
+2025-11-09 21:23:27,009 - INFO - 📦 Página 2: 32 produtos coletados (Total: 64)
+2025-11-09 21:23:29,041 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:23:29,814 - INFO - ✅ Página carregada completamente
+2025-11-09 21:23:32,829 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:23:36,744 - INFO - 📄 Processando página 3...
+2025-11-09 21:23:36,744 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:23:36,755 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:23:38,159 - INFO - ✅ Página processada: 32 produtos coletados
+2025-11-09 21:23:38,159 - INFO - 📦 Página 3: 32 produtos coletados (Total: 96)
+2025-11-09 21:23:40,191 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:23:41,022 - INFO - ✅ Página carregada completamente
+2025-11-09 21:23:44,037 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:23:47,191 - INFO - 🎉 Coleta de https://lista.mercadolivre.com.br/nintendo-switch concluída: 96 produtos em 4 páginas
+2025-11-09 21:23:47,191 - INFO - ✅ URL 4 concluída: 96 produtos coletados
+2025-11-09 21:23:47,191 - INFO - ⏳ Pausando 5.3s antes da próxima URL...
+2025-11-09 21:23:52,539 - INFO - 
+============================================================
+2025-11-09 21:23:52,539 - INFO - 🌐 PROCESSANDO URL 5/6: https://lista.mercadolivre.com.br/nintendo-switch-2
+2025-11-09 21:23:52,539 - INFO - ============================================================
+2025-11-09 21:23:52,539 - INFO - 🌐 Navegando para: https://lista.mercadolivre.com.br/nintendo-switch-2
+2025-11-09 21:23:52,539 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:23:53,734 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:23:53,754 - INFO - ✅ Página carregada completamente
+2025-11-09 21:23:56,769 - INFO - 📄 Processando página 1...
+2025-11-09 21:23:56,769 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:23:56,780 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:23:58,214 - INFO - ✅ Página processada: 26 produtos coletados
+2025-11-09 21:23:58,214 - INFO - 📦 Página 1: 26 produtos coletados (Total: 26)
+2025-11-09 21:24:00,246 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:24:01,259 - INFO - ✅ Página carregada completamente
+2025-11-09 21:24:04,274 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:24:08,182 - INFO - 📄 Processando página 2...
+2025-11-09 21:24:08,182 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:24:08,193 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:24:09,689 - INFO - ✅ Página processada: 26 produtos coletados
+2025-11-09 21:24:09,689 - INFO - 📦 Página 2: 26 produtos coletados (Total: 52)
+2025-11-09 21:24:11,722 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:24:12,463 - INFO - ✅ Página carregada completamente
+2025-11-09 21:24:15,479 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:24:18,078 - INFO - 📄 Processando página 3...
+2025-11-09 21:24:18,078 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:24:18,089 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:24:19,502 - INFO - ✅ Página processada: 26 produtos coletados
+2025-11-09 21:24:19,502 - INFO - 📦 Página 3: 26 produtos coletados (Total: 78)
+2025-11-09 21:24:21,534 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:24:22,509 - INFO - ✅ Página carregada completamente
+2025-11-09 21:24:25,523 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:24:28,107 - INFO - 🎉 Coleta de https://lista.mercadolivre.com.br/nintendo-switch-2 concluída: 78 produtos em 4 páginas
+2025-11-09 21:24:28,107 - INFO - ✅ URL 5 concluída: 78 produtos coletados
+2025-11-09 21:24:28,107 - INFO - ⏳ Pausando 5.7s antes da próxima URL...
+2025-11-09 21:24:33,836 - INFO - 
+============================================================
+2025-11-09 21:24:33,836 - INFO - 🌐 PROCESSANDO URL 6/6: https://lista.mercadolivre.com.br/switch-2
+2025-11-09 21:24:33,836 - INFO - ============================================================
+2025-11-09 21:24:33,836 - INFO - 🌐 Navegando para: https://lista.mercadolivre.com.br/switch-2
+2025-11-09 21:24:33,836 - INFO - 📄 Limite de páginas configurado: 3
+2025-11-09 21:24:35,209 - INFO - ⏳ Aguardando página carregar...
+2025-11-09 21:24:35,221 - INFO - ✅ Página carregada completamente
+2025-11-09 21:24:38,236 - INFO - 📄 Processando página 1...
+2025-11-09 21:24:38,236 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:24:38,256 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:24:39,679 - INFO - ✅ Página processada: 26 produtos coletados
+2025-11-09 21:24:39,679 - INFO - 📦 Página 1: 26 produtos coletados (Total: 26)
+2025-11-09 21:24:41,707 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:24:42,539 - INFO - ✅ Página carregada completamente
+2025-11-09 21:24:45,551 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:24:48,899 - INFO - 📄 Processando página 2...
+2025-11-09 21:24:48,899 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:24:48,910 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:24:50,341 - INFO - ✅ Página processada: 26 produtos coletados
+2025-11-09 21:24:50,341 - INFO - 📦 Página 2: 26 produtos coletados (Total: 52)
+2025-11-09 21:24:52,374 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:24:53,317 - INFO - ✅ Página carregada completamente
+2025-11-09 21:24:56,332 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:24:58,997 - INFO - 📄 Processando página 3...
+2025-11-09 21:24:58,997 - INFO - 🔍 Procurando por itens na página...
+2025-11-09 21:24:59,009 - INFO - 📋 Encontrados 48 itens usando seletor: .ui-search-layout__item
+2025-11-09 21:25:00,470 - INFO - ✅ Página processada: 26 produtos coletados
+2025-11-09 21:25:00,470 - INFO - 📦 Página 3: 26 produtos coletados (Total: 78)
+2025-11-09 21:25:02,499 - INFO - 🔍 Botão 'Seguinte' encontrado com seletor: li.andes-pagination__button--next
+2025-11-09 21:25:03,329 - INFO - ✅ Página carregada completamente
+2025-11-09 21:25:06,344 - INFO - ✅ Navegou para próxima página
+2025-11-09 21:25:08,483 - INFO - 🎉 Coleta de https://lista.mercadolivre.com.br/switch-2 concluída: 78 produtos em 4 páginas
+2025-11-09 21:25:08,483 - INFO - ✅ URL 6 concluída: 78 produtos coletados
+2025-11-09 21:25:08,484 - INFO - 🎉 Coleta do MercadoLivre concluída! Total: 399 produtos
+2025-11-09 21:25:08,484 - INFO - 🔒 Fechando driver do MercadoLivre...
+2025-11-09 21:25:08,569 - INFO - ✅ Mercado Livre concluído em 240.2s - 399 produtos coletados
+2025-11-09 21:25:08,569 - INFO - 
+==================================================
+2025-11-09 21:25:08,569 - INFO - PROCESSANDO DADOS COLETADOS
+2025-11-09 21:25:08,569 - INFO - ==================================================
+2025-11-09 21:25:08,570 - INFO - 📊 Total de produtos únicos coletados: 1077
+2025-11-09 21:25:08,587 - INFO - 💾 Dados do Magazine Luiza salvos em magazineluiza_products.json
+2025-11-09 21:25:08,597 - INFO - 💾 Dados do Mercado Livre salvos em mercadolivre_products.json
+2025-11-09 21:25:08,597 - INFO - 
+==================================================
+2025-11-09 21:25:08,597 - INFO - ESTATÍSTICAS FINAIS
+2025-11-09 21:25:08,597 - INFO - ==================================================
+2025-11-09 21:25:08,597 - INFO - 📈 Total de produtos: 1077
+2025-11-09 21:25:08,598 - INFO -   - Magazine Luiza: 678
+2025-11-09 21:25:08,598 - INFO -   - Mercado Livre: 399
+2025-11-09 21:25:08,598 - INFO - 💰 Produtos com preço: 1077
+2025-11-09 21:25:08,598 - INFO - 💿 Com leitor de disco: 5
+2025-11-09 21:25:08,598 - INFO - 📱 Sem leitor de disco: 89
+2025-11-09 21:25:08,598 - INFO - 🎮 Com controles: 193
+2025-11-09 21:25:08,598 - INFO - 🎯 Com jogos: 23
+2025-11-09 21:25:08,598 - INFO - 
+📊 Distribuição por tipo de console:
+2025-11-09 21:25:08,598 - INFO -   PS5: 175
+2025-11-09 21:25:08,598 - INFO -   Não especificado: 81
+2025-11-09 21:25:08,598 - INFO -   Xbox Series X: 114
+2025-11-09 21:25:08,598 - INFO -   Xbox Series S: 122
+2025-11-09 21:25:08,598 - INFO -   Nintendo Switch: 397
+2025-11-09 21:25:08,598 - INFO -   Nintendo Switch 2: 188
+2025-11-09 21:25:08,598 - INFO - 
+📊 Distribuição por modelo:
+2025-11-09 21:25:08,598 - INFO -   PS5 Digital Edition: 9
+2025-11-09 21:25:08,598 - INFO -   PS5 Standard: 102
+2025-11-09 21:25:08,598 - INFO -   PS5 Slim: 42
+2025-11-09 21:25:08,598 - INFO -   PS5 Pro: 22
+2025-11-09 21:25:08,598 - INFO -   Não especificado: 81
+2025-11-09 21:25:08,598 - INFO -   Xbox Series X: 114
+2025-11-09 21:25:08,598 - INFO -   Xbox Series S: 122
+2025-11-09 21:25:08,598 - INFO -   Nintendo Switch: 397
+2025-11-09 21:25:08,598 - INFO -   Nintendo Switch 2: 188
+2025-11-09 21:25:08,598 - INFO - 
+🏷️ Distribuição por marca:
+2025-11-09 21:25:08,599 - INFO -   Sony: 157
+2025-11-09 21:25:08,599 - INFO -   Microsoft: 309
+2025-11-09 21:25:08,599 - INFO -   Nintendo: 602
+2025-11-09 21:25:08,599 - INFO -   Não especificada: 9
+2025-11-09 21:25:08,599 - INFO - 
+🎨 Cores encontradas:
+2025-11-09 21:25:08,599 - INFO -   Branco: 174
+2025-11-09 21:25:08,599 - INFO -   Preto: 75
+2025-11-09 21:25:08,599 - INFO -   Blue: 8
+2025-11-09 21:25:08,599 - INFO -   Red: 16
+2025-11-09 21:25:08,599 - INFO -   Azul: 44
+2025-11-09 21:25:08,599 - INFO -   White: 18
+2025-11-09 21:25:08,599 - INFO -   Vermelho: 21
+2025-11-09 21:25:08,599 - INFO -   Black: 5
+2025-11-09 21:25:08,599 - INFO -   Cinza: 12
+2025-11-09 21:25:08,599 - INFO -   Dourado: 21
+2025-11-09 21:25:08,599 - INFO - 
+💾 Armazenamento:
+2025-11-09 21:25:08,599 - INFO -   console sony playstation 5, edição digital, ssd 825 GB, controle sem fio dualsense + 2 jogos digitais - 1000050614: 1
+2025-11-09 21:25:08,599 - INFO -   console sony playstation 5, com leitor de discos, ssd 1 TB, controle sem fio dualsense + 2 jogos: 1
+2025-11-09 21:25:08,599 - INFO -   playstation 5 edição digital 825 GB 1 controle branco sony com 2 jogos: 1
+2025-11-09 21:25:08,599 - INFO -   console sony playstation 5, com leitor de discos, ssd 1 TB, controle sem fio dualsense + 2 jogos - 1000050613: 1
+2025-11-09 21:25:08,599 - INFO -   console sony playstation 5 slim com leitor de discos, edição limitada ouro, ghost of yotei, ssd 1 TB, controle sem fio dualsense - 1000048424: 1
+2025-11-09 21:25:08,599 - INFO -   console sony playstation 5 slim disk 1 TB dualsense branco: 1
+2025-11-09 21:25:08,599 - INFO -   playstation 5 edição digital 825 GB 1 controle branco sony: 1
+2025-11-09 21:25:08,599 - INFO -   console sony playstation 5, edição digital, ssd 825 GB, controle sem fio dualsense + 2 jogos digitais: 1
+2025-11-09 21:25:08,599 - INFO -   playstation 5 slim disk 1 TB 1 controle branco sony: 1
+2025-11-09 21:25:08,599 - INFO -   playstation 5 disk slim 2025 1 TB 1 controle branco sony: 1
+2025-11-09 21:25:08,599 - INFO -   playstation 5 pro 2024 2 TB 1 controle branco sony: 1
+2025-11-09 21:25:08,599 - INFO -   console playstation 5 pro sony, ssd 2 TB, com controle sem fio dualsense, branco - 1000046552: 1
+2025-11-09 21:25:08,599 - INFO -   console sony playstation 5 slin, edicao digital, ssd 1 TB, 1 controle sem fio dual sense branco, dois: 1
+2025-11-09 21:25:08,599 - INFO -   cabo hdmi 2.1 8k 4k 120hz 48 GB xbox one x ps5 ps4 pro: 1
+2025-11-09 21:25:08,599 - INFO -   ssd addlink a93 pc para jogos ps5 de 4 TB com dissipador de calor 7400 mb/s gen4: 1
+2025-11-09 21:25:08,599 - INFO -   console хвох series x ssd 1 TB white premium digital edition jogos em 4k 120hz 8k dinamic boost: 1
+2025-11-09 21:25:08,600 - INFO -   microsoft xbox series x 1 TB ssd branco: 2
+2025-11-09 21:25:08,600 - INFO -   console хвох series x ssd 1 TB white premium digital edition 4k 120hz 8k dinamic boost: 1
+2025-11-09 21:25:08,600 - INFO -   xbox series s 2021 512 GB ssd 1 controle branco microsoft: 1
+2025-11-09 21:25:08,600 - INFO -   console xbox series s 512 GB digital - branco: 1
+2025-11-09 21:25:08,600 - INFO -   console microsoft xbox series s 512 GB branco: 1
+2025-11-09 21:25:08,600 - INFO -   console microsoft xbox serie s ssd 500 GB controle rrs-00006: 1
+2025-11-09 21:25:08,600 - INFO -   console microsoft xbox series s 512 GB 10 GB ram all digital: 1
+2025-11-09 21:25:08,600 - INFO -   ssd western digital wd sn530 de 1 TB m.2 pcie 4.0x2 2230 para xbox series x s jogos aprimorados: 1
+2025-11-09 21:25:08,600 - INFO -   console microsoft xbox series s 1tb 10 GB ram ditital: 1
+2025-11-09 21:25:08,600 - INFO -   console nintendo switch oled 64 GB edição mario kart 8 deluxe com 3 meses assinatura nintendo switch online: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo swich 64 GB 2 controles joy-con branco 3 meses de assinatura nintendo switch online: 2
+2025-11-09 21:25:08,600 - INFO -   console nintendo switch 32 GB v2 com jogo digital mario kart 8 deluxe: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo switch bundle console + jogo digital mario kart 8 deluxe 32 GB 3 meses de assinatura: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo switch lite 32 GB azul standard lcd 5,5": 1
+2025-11-09 21:25:08,600 - INFO -   console nintendo switch 2, 256 GB, preto, azul e vermelho: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo switch 32 GB hac-001-01 1 controle joy-con: 1
+2025-11-09 21:25:08,600 - INFO -   console nintendo switch v2 32 GB mario kart 8 deluxe: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo switch 32 GB 1 controle joy-con: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo switch oled 64 GB 1x joy-con branco standard - hegskaaaa: 1
+2025-11-09 21:25:08,600 - INFO -   console nintendo switch lite azul 32 GB: 4
+2025-11-09 21:25:08,600 - INFO -   console-nintendo-switch-oled tela de 7 polegadas 64 GB bivolt: 1
+2025-11-09 21:25:08,600 - INFO -   console nintendo switch oled 64 GB super mario bros edição: 1
+2025-11-09 21:25:08,600 - INFO -   console nintendo switch oled 64 GB mario red edition: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo switch v2 32 GB mario kart 8 deluxe + assinatura 3m: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo switch 32 GB 2 controles joy-con preto 3 meses de assinatura nintendo switch online: 1
+2025-11-09 21:25:08,600 - INFO -   nintendo switch 32 GB joycon vermelho e azul neon v2: 1
+2025-11-09 21:25:08,600 - INFO -   cartão sandisk sdxc para nintendo switch 256 GB: 1
+2025-11-09 21:25:08,600 - INFO -   cartão de memória sandisk micro sd nintendo switch 128 GB, 100mb/s - sdsqxao-128g-gnczn: 1
+2025-11-09 21:25:08,600 - INFO -   cartão de memória samsung microsd express 256 GB para nintendo switch 2: 1
+2025-11-09 21:25:08,600 - INFO -   switch de rede keeplink 6 portas 2,5g - 60 GBps - não gerenciado: 1
+2025-11-09 21:25:08,600 - INFO -   cartão de memória gigastone 64 GB, pacote com 2 câmeras 4k pro, gopro switch: 1
+2025-11-09 21:25:08,600 - INFO -   switch poe nicgiga 16 portas 2,5 g 18 portas 2,5 GB com 2 x 10 g sfp+: 1
+2025-11-09 21:25:08,601 - INFO -   ugreen divisor hdmi 2.1 8k 60hz 4k 120hz 1080p 48 GBps switch splitter 2 entrada para 1 saída: 1
+2025-11-09 21:25:08,601 - INFO -   console playstation 5 midia fisica slim branco 1 TB returnal e ratchet e clank controle sem fio dualsense branco: 3
+2025-11-09 21:25:08,601 - INFO -   console playstation® 5 slim edição digital 1 TB branco - sony: 3
+2025-11-09 21:25:08,601 - INFO -   sony playstation 5 slim 1 TB cor branco: 3
+2025-11-09 21:25:08,601 - INFO -   sony playstation 5 slim digital cfi-2015b 1 TB slim cor branco 2023: 3
+2025-11-09 21:25:08,601 - INFO -   sony playstation 5 pro cfi-7020 2 TB digital cor branco 2024: 3
+2025-11-09 21:25:08,601 - INFO -   console sony playstation 5 digital slim 1 TB – branco + jogos returnal e ratchet & clank + controle sem fio dualsense branco: 3
+2025-11-09 21:25:08,601 - INFO -   console sony playstation 5 digital slim 1 TB – branco + jogos returnal e ratchet & clank + controle sem fio dualsense branco (novo com caixa aberta): 3
+2025-11-09 21:25:08,601 - INFO -   sony ps5 slim ssd 1 TB dourado edição ghost of yotei ouro: 3
+2025-11-09 21:25:08,601 - INFO -   sony playstation 5 825 GB marvel’s spider man 2 limited edition mídia física: 3
+2025-11-09 21:25:08,601 - INFO -   sony playstation 5 slim digital cfi-2000 1 TB ratchet & clank rift apart returnal color branco: 3
+2025-11-09 21:25:08,601 - INFO -   playstation 5 (ps5) slim 30th anniversary edition ssd 1 TB - cfi 2000 b30 cinza: 3
+2025-11-09 21:25:08,601 - INFO -   console microsoft xbox series x 1 TB digital xbox series x branco: 3
+2025-11-09 21:25:08,601 - INFO -   microsoft xbox series s 512 GB bundle 3 meses game pass cor branco 2023: 6
+2025-11-09 21:25:08,601 - INFO -   microsoft xbox series x 1 TB: 6
+2025-11-09 21:25:08,601 - INFO -   microsoft xbox series x rrt-00015 1 TB standard cor preto 2020: 3
+2025-11-09 21:25:08,601 - INFO -   microsoft xbox micrrt00002 x standard 1 TB preto: 3
+2025-11-09 21:25:08,601 - INFO -   xbox series s 1 TB preto - xbox series s 1 TB carbon black: 6
+2025-11-09 21:25:08,601 - INFO -   microsoft xbox series s 1 TB branco branco: 6
+2025-11-09 21:25:08,601 - INFO -   console xbox series x 1 TB standard: 3
+2025-11-09 21:25:08,601 - INFO -   microsoft xbox series s 1 TB branco - excelente (recondicionado): 6
+2025-11-09 21:25:08,601 - INFO -   console microsoft xbox series s 512 GB cor branco: 6
+2025-11-09 21:25:08,601 - INFO -   console microsoft xbox series s 512 GB com controle adicional cor pulse red cor vermelho: 3
+2025-11-09 21:25:08,601 - INFO -   console microsoft xbox series s 512 GB com controle adicional cor shock blue cor azul: 3
+2025-11-09 21:25:08,602 - INFO -   microsoft xbox series s rrs-00002 512 GB standard cor robot white 2020: 3
+2025-11-09 21:25:08,602 - INFO -   microsoft xbox series s 512 GB standard cor branco: 6
+2025-11-09 21:25:08,602 - INFO -   microsoft xbox series s 512 GB kit extra controller cor branco 2020: 3
+2025-11-09 21:25:08,602 - INFO -   console xbox series s rrs-00006 512 GB standard cor robot white 2020: 3
+2025-11-09 21:25:08,602 - INFO -   microsoft xbox series s 512 GB kit extra controller cor branco 2020 - excelente (recondicionado): 3
+2025-11-09 21:25:08,602 - INFO -   microsoft xbox series s 512 GB standard cor branco (novo com caixa aberta): 3
+2025-11-09 21:25:08,602 - INFO -   console microsoft xbox one s 1 TB branco: 3
+2025-11-09 21:25:08,602 - INFO -   console xbox series s rrs-00159 512 GB starter bundle cor branco 2023 - excelente (recondicionado): 3
+2025-11-09 21:25:08,602 - INFO -   console microsoft xbox series s 512 GB com controle adicional cor electric volt: 3
+2025-11-09 21:25:08,602 - INFO -   console xbox series s 512 GB digital branco - excelente (recondicionado): 3
+2025-11-09 21:25:08,602 - INFO -   microsoft xbox series s 512 GB standard cor branco - excelente (recondicionado): 3
+2025-11-09 21:25:08,602 - INFO -   console switch v2 32 GB + mario kart 8 nintendo: 9
+2025-11-09 21:25:08,602 - INFO -   console nintendo switch oled 64 GB branco mario kart 8 deluxe 3 meses de assinatura nintendo switch online: 9
+2025-11-09 21:25:08,602 - INFO -   nintendo switch lite 32 GB standard azul: 3
+2025-11-09 21:25:08,602 - INFO -   nintendo switch lite 32 GB standard cor coral: 3
+2025-11-09 21:25:08,602 - INFO -   nintendo switch oled mario kart 8 lujosa c generation 256 GB: 3
+2025-11-09 21:25:08,602 - INFO -   nintendo switch oled 64 GB standard com joy-con branco: 18
+2025-11-09 21:25:08,602 - INFO -   nintendo lite switch lite 32 GB standard cor cinza 2019: 3
+2025-11-09 21:25:08,602 - INFO -   console nintendo switch lite 32 GB azul turquesa standard tela 5,5'' cor azul-turquesa: 3
+2025-11-09 21:25:08,602 - INFO -   console nintendo switch lite 32 GB standard amarelo: 9
+2025-11-09 21:25:08,602 - INFO -   console nintendo switch lite 32 GB amarelo: 9
+2025-11-09 21:25:08,602 - INFO -   nintendo switch lite 32 GB azul turquesa console portátil com tela 5.5”: 3
+2025-11-09 21:25:08,602 - INFO -   nintendo switch oled heg-001 (eur) 64 GB standard cor branco 2021: 9
+2025-11-09 21:25:08,603 - INFO -   nintendo switch lite 32 GB standard turquesa: 3
+2025-11-09 21:25:08,603 - INFO -   console nintendo switch 32 GB azul/vermelho neon v2 - excelente (recondicionado): 9
+2025-11-09 21:25:08,603 - INFO -   nintendo switch oled heg-001 64 GB standard branco 2021: 9
+2025-11-09 21:25:08,603 - INFO -   nintendo switch oled 64 GB the legend of zelda: tears of the kingdom edition cor verde y dourado y preto 2023: 9
+2025-11-09 21:25:08,603 - INFO -   nintendo switch lite 32 GB dialga & palkia edition cor cinza: 3
+2025-11-09 21:25:08,603 - INFO -   nintendo nintendo switch switch 32 GB standard cor vermelho-néon, azul-néon e preto: 9
+2025-11-09 21:25:08,603 - INFO -   nintendo switch oled 64 GB the legend of zelda: tears of the kingdom cor dourado 2023: 9
+2025-11-09 21:25:08,603 - INFO -   nintendo switch oled heg-001 64 GB the legend of zelda: tears of the kingdom cor dourado 2023: 9
+2025-11-09 21:25:08,603 - INFO -   nintendo consola switch 2 standard bme-s-kb6aa 256 GB preto: 6
+2025-11-09 21:25:08,603 - INFO -   nintendo switch 32 GB animal crossing: new horizons + jogo cor verde pastel y azul pastel: 6
+2025-11-09 21:25:08,603 - INFO -   console nintendo switch oled 64 GB tela 7 - excelente (recondicionado): 6
+2025-11-09 21:25:08,603 - INFO -   nintendo switch oled 64 GB edição especial mario vermelho cor vermelha: 6
+2025-11-09 21:25:08,603 - INFO -   nintendo switch 32 GB standard cor cinza y preto 2019: 6
+2025-11-09 21:25:08,603 - INFO -   nintendo switch oled branco 64 GB: 6
+2025-11-09 21:25:08,603 - INFO - 
+✅ COLETA CONCLUÍDA COM SUCESSO!
+2025-11-09 21:25:08,603 - INFO - 📁 Arquivos gerados:
+2025-11-09 21:25:08,603 - INFO -   - magazineluiza_products.json
+2025-11-09 21:25:08,603 - INFO -   - mercadolivre_products.json
+2025-11-09 21:25:08,603 - INFO -   - scraper.log
