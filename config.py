@@ -4,9 +4,12 @@ Arquivo de configuração para o scraper PS5
 """
 
 # Configurações gerais
+# Nota: O número máximo de páginas pode ser configurado via variável de ambiente MAX_PAGES_PER_SITE
+# Se não definida, usa o valor padrão abaixo
 SCRAPER_CONFIG = {
-    # Número máximo de páginas para coletar por site
-    'max_pages_per_site': 8,
+    # Número máximo de páginas para coletar por site (padrão: 50)
+    # Pode ser sobrescrito pela variável de ambiente MAX_PAGES_PER_SITE
+    'max_pages_per_site': 50,
     
     # Delay entre requisições (em segundos)
     'min_delay': 3,

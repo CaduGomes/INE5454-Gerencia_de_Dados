@@ -49,9 +49,26 @@ sudo ln -sf /usr/local/bin/chromedriver /usr/bin/chromedriver
 
 #### 3. Execução do Scraper
 ```bash
-# Executar scraper completo
+# Executar scraper completo (usa padrão de 50 páginas por site)
 python3 ps5_scraper.py
+
+# Executar com limite personalizado de páginas por site
+export MAX_PAGES_PER_SITE=10
+python3 ps5_scraper.py
+
+# Ou definir inline
+MAX_PAGES_PER_SITE=5 python3 ps5_scraper.py
 ```
+
+#### 4. Configuração de Variáveis de Ambiente
+
+O scraper suporta as seguintes variáveis de ambiente:
+
+- **MAX_PAGES_PER_SITE**: Define o número máximo de páginas a coletar por site (padrão: 50)
+  ```bash
+  export MAX_PAGES_PER_SITE=10  # Coleta no máximo 10 páginas por site
+  python3 ps5_scraper.py
+  ```
 
 ### Arquivos do Projeto
 
@@ -72,7 +89,7 @@ python3 ps5_scraper.py
 
 ### Funcionalidades
 
-- ✅ Coleta de até 8 páginas por site
+- ✅ Coleta configurável de páginas por site (via variável de ambiente MAX_PAGES_PER_SITE, padrão: 50)
 - ✅ Remoção de duplicatas
 - ✅ Tratamento robusto de erros
 - ✅ Delays aleatórios para evitar bloqueios
