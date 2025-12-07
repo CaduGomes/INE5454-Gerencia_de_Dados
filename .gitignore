@@ -137,7 +137,6 @@ scraper.log
 # Arquivos de saída do scraper
 ps5_products.json
 ps5_products.xlsx
-*.json
 *.xlsx
 
 # Arquivos temporários do Chrome
